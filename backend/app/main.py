@@ -12,7 +12,9 @@ app = FastAPI(
 origins = [
     "http://localhost:5173",  # Vite Dev Server
     "http://localhost:3000",
-    "https://rainforge.demo"
+    "https://rainforge.vercel.app",
+    "https://*.vercel.app",
+    "*"  # Allow all for demo purposes
 ]
 
 app.add_middleware(
