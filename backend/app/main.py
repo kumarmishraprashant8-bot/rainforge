@@ -8,19 +8,11 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# CORS Configuration
-origins = [
-    "http://localhost:5173",  # Vite Dev Server
-    "http://localhost:3000",
-    "https://rainforge.vercel.app",
-    "https://*.vercel.app",
-    "*"  # Allow all for demo purposes
-]
-
+# CORS Configuration - Allow all origins for demo
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
