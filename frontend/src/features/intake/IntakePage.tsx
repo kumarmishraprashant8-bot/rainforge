@@ -36,9 +36,10 @@ const IntakePage = () => {
                 polygon_geojson: formData.geometry || null
             });
             navigate(`/assess/${response.data.project_id}`, { state: { result: response.data } });
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to submit assessment. Backend may be starting up - please try again in 30 seconds.");
+            const errorMsg = error.response?.data?.detail || error.message || 'Unknown error';
+            alert(`Failed: ${errorMsg}`);
         } finally {
             setLoading(false);
         }
