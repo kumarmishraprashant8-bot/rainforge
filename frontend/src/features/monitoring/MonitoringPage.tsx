@@ -29,8 +29,8 @@ const MonitoringPage = () => {
     const fetchData = async () => {
         try {
             const [statusRes, historyRes] = await Promise.all([
-                axios.get(`http://localhost:8000/api/v1/monitoring/${projectId}/status`),
-                axios.get(`http://localhost:8000/api/v1/monitoring/${projectId}/history?hours=24`)
+                axios.get(`https://rainforge-api.onrender.com/api/v1/monitoring/${projectId}/status`),
+                axios.get(`https://rainforge-api.onrender.com/api/v1/monitoring/${projectId}/history?hours=24`)
             ]);
             setTankStatus(statusRes.data);
             setHistory(historyRes.data.readings);

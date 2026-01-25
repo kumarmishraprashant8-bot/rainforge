@@ -29,7 +29,7 @@ const IntakePage = () => {
         const areaToUse = useManualInput && manualArea ? parseFloat(manualArea) : formData.roof_area || 120;
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/assessments/quick', {
+            const response = await axios.post('https://rainforge-api.onrender.com/api/v1/assessments/quick', {
                 address: formData.address || '123 Rain Street, New Delhi',
                 roof_material: formData.roof_material,
                 roof_area_sqm: areaToUse,

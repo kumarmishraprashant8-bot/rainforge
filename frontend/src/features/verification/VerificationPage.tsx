@@ -23,7 +23,7 @@ const VerificationPage = () => {
     const handleSubmit = async () => {
         setSubmitting(true);
         try {
-            await axios.post(`http://localhost:8000/api/v1/verification/${projectId}/submit`, {
+            await axios.post(`https://rainforge-api.onrender.com/api/v1/verification/${projectId}/submit`, {
                 project_id: projectId,
                 photo_url: photoUrl || 'https://via.placeholder.com/800x600?text=Installation+Photo',
                 geo_lat: geoLat,

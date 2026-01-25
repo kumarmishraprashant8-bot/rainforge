@@ -36,7 +36,7 @@ const BulkUploadPage = () => {
     const [results, setResults] = useState<BatchResult | null>(null);
 
     const downloadSampleCSV = async () => {
-        const response = await axios.get('http://localhost:8000/api/v1/bulk/sample-csv');
+        const response = await axios.get('https://rainforge-api.onrender.com/api/v1/bulk/sample-csv');
         const blob = new Blob([response.data.content], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -55,7 +55,7 @@ const BulkUploadPage = () => {
             formData.append('scenario', scenario);
 
             const response = await axios.post(
-                `http://localhost:8000/api/v1/bulk/upload-csv?scenario=${scenario}`,
+                `https://rainforge-api.onrender.com/api/v1/bulk/upload-csv?scenario=${scenario}`,
                 formData,
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
@@ -151,8 +151,8 @@ const BulkUploadPage = () => {
                                     key={s.id}
                                     onClick={() => setScenario(s.id)}
                                     className={`p-4 rounded-xl text-left transition-all ${scenario === s.id
-                                            ? 'bg-cyan-500 text-white'
-                                            : 'bg-white/5 text-gray-300 hover:bg-white/10'
+                                        ? 'bg-cyan-500 text-white'
+                                        : 'bg-white/5 text-gray-300 hover:bg-white/10'
                                         }`}
                                 >
                                     <div className="font-bold">{s.label}</div>
@@ -168,8 +168,8 @@ const BulkUploadPage = () => {
                             onClick={handleUpload}
                             disabled={!file || loading}
                             className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all ${file && !loading
-                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-105'
-                                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-105'
+                                : 'bg-gray-700 text-gray-500 cursor-not-allowed'
                                 }`}
                         >
                             {loading ? 'Processing...' : 'Run Batch Assessment'}

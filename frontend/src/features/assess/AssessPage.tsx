@@ -76,7 +76,7 @@ const AssessPage = () => {
 
     const downloadReport = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/v1/assessments/${result.project_id}/report`);
+            const response = await fetch(`https://rainforge-api.onrender.com/api/v1/assessments/${result.project_id}/report`);
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');

@@ -52,7 +52,7 @@ const AllocationPanel = () => {
 
     const fetchInstallers = async () => {
         try {
-            const res = await fetch('http://localhost:8000/api/v1/marketplace/installers');
+            const res = await fetch('https://rainforge-api.onrender.com/api/v1/marketplace/installers');
             const data = await res.json();
             setInstallers(data.installers || []);
         } catch (e) {
@@ -68,7 +68,7 @@ const AllocationPanel = () => {
     const runAllocation = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:8000/api/v1/marketplace/allocate', {
+            const res = await fetch('https://rainforge-api.onrender.com/api/v1/marketplace/allocate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -100,7 +100,7 @@ const AllocationPanel = () => {
 
     const updateWeights = async () => {
         try {
-            await fetch('http://localhost:8000/api/v1/marketplace/allocation-weights', {
+            await fetch('https://rainforge-api.onrender.com/api/v1/marketplace/allocation-weights', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(weights)
@@ -141,8 +141,8 @@ const AllocationPanel = () => {
                         key={key}
                         onClick={() => setMode(key as typeof mode)}
                         className={`p-4 rounded-xl border-2 transition-all ${mode === key
-                                ? `border-${config.color}-500 bg-${config.color}-500/20`
-                                : 'border-white/10 hover:border-white/30'
+                            ? `border-${config.color}-500 bg-${config.color}-500/20`
+                            : 'border-white/10 hover:border-white/30'
                             }`}
                     >
                         <config.icon className={`mb-2 ${mode === key ? `text-${config.color}-400` : 'text-gray-400'}`} size={24} />

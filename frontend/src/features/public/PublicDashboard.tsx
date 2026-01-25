@@ -37,7 +37,7 @@ const PublicDashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const res = await fetch('http://localhost:8000/api/v1/public/city/stats');
+            const res = await fetch('https://rainforge-api.onrender.com/api/v1/public/city/stats');
             setStats(await res.json());
         } catch (e) {
             // Mock data
@@ -66,7 +66,7 @@ const PublicDashboard = () => {
 
     const exportData = async (format: string) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/v1/public/city/export?format=${format}`);
+            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/public/city/export?format=${format}`);
             const data = await res.json();
 
             if (format === 'csv') {

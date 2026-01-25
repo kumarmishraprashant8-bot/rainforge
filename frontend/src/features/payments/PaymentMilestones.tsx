@@ -36,7 +36,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
     const createPayment = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:8000/api/v1/payments', {
+            const res = await fetch('https://rainforge-api.onrender.com/api/v1/payments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ job_id: jobId, total_amount: totalAmount })
@@ -44,7 +44,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
             const data = await res.json();
 
             // Capture to escrow
-            await fetch(`http://localhost:8000/api/v1/payments/${data.payment_id}/escrow`, { method: 'POST' });
+            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${data.payment_id}/escrow`, { method: 'POST' });
 
             fetchPayment(data.payment_id);
         } catch (e) {
@@ -69,7 +69,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
 
     const fetchPayment = async (paymentId: string) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/v1/payments/${paymentId}`);
+            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${paymentId}`);
             setPayment(await res.json());
         } catch (e) { }
     };
@@ -79,7 +79,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
         setLoading(true);
 
         try {
-            await fetch(`http://localhost:8000/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/complete`, { method: 'POST' });
+            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/complete`, { method: 'POST' });
             await fetchPayment(payment.payment_id);
         } catch (e) {
             // Mock update
@@ -98,7 +98,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
         setLoading(true);
 
         try {
-            await fetch(`http://localhost:8000/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/verify`, { method: 'POST' });
+            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/verify`, { method: 'POST' });
             await fetchPayment(payment.payment_id);
         } catch (e) {
             setPayment({
@@ -116,7 +116,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
         setLoading(true);
 
         try {
-            await fetch(`http://localhost:8000/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/release`, { method: 'POST' });
+            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/release`, { method: 'POST' });
             await fetchPayment(payment.payment_id);
         } catch (e) {
             const milestone = payment.milestones.find(m => m.id === milestoneId);
@@ -155,7 +155,7 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
                     <div className="text-sm">
                         <span className="text-gray-400">Status: </span>
                         <span className={`font-semibold ${payment.status === 'released' ? 'text-green-400' :
-                                payment.status === 'escrow' ? 'text-yellow-400' : 'text-gray-400'
+                            payment.status === 'escrow' ? 'text-yellow-400' : 'text-gray-400'
                             }`}>
                             {payment.status.toUpperCase()}
                         </span>

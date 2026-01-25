@@ -39,7 +39,7 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
     const openBidding = async () => {
         setLoading(true);
         try {
-            await fetch(`http://localhost:8000/api/v1/marketplace/jobs/${jobId}/open-bid`, {
+            await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/jobs/${jobId}/open-bid`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ deadline_hours: 72 })
@@ -54,7 +54,7 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
     const submitBid = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:8000/api/v1/marketplace/bids', {
+            const res = await fetch('https://rainforge-api.onrender.com/api/v1/marketplace/bids', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ job_id: jobId, ...newBid })
@@ -75,7 +75,7 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
 
     const fetchBids = async () => {
         try {
-            const res = await fetch(`http://localhost:8000/api/v1/marketplace/bids?job_id=${jobId}`);
+            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/bids?job_id=${jobId}`);
             const data = await res.json();
             setBids(data.bids || []);
         } catch (e) {
@@ -86,7 +86,7 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
     const awardBid = async (bidId: string) => {
         setLoading(true);
         try {
-            await fetch(`http://localhost:8000/api/v1/marketplace/bids/${bidId}/award`, { method: 'POST' });
+            await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/bids/${bidId}/award`, { method: 'POST' });
         } catch (e) { }
 
         const awarded = bids.find(b => b.bid_id === bidId);
@@ -116,7 +116,7 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
                     Competitive Bidding
                 </h2>
                 <div className={`px-3 py-1 rounded-full text-sm font-semibold ${awardedBid ? 'bg-green-500/20 text-green-400' :
-                        bidOpen ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-500/20 text-gray-400'
+                    bidOpen ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-500/20 text-gray-400'
                     }`}>
                     {awardedBid ? '✓ Awarded' : bidOpen ? '● Open' : '○ Closed'}
                 </div>
@@ -204,18 +204,18 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
                         <div
                             key={bid.bid_id}
                             className={`p-4 rounded-xl border-2 transition-all ${awardedBid?.bid_id === bid.bid_id
-                                    ? 'border-green-500 bg-green-500/10'
-                                    : bid.rank === 1
-                                        ? 'border-yellow-500/50 bg-yellow-500/5'
-                                        : 'border-white/10 bg-white/5'
+                                ? 'border-green-500 bg-green-500/10'
+                                : bid.rank === 1
+                                    ? 'border-yellow-500/50 bg-yellow-500/5'
+                                    : 'border-white/10 bg-white/5'
                                 }`}
                         >
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-3">
                                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${bid.rank === 1 ? 'bg-yellow-500 text-black' :
-                                            bid.rank === 2 ? 'bg-gray-300 text-black' :
-                                                bid.rank === 3 ? 'bg-amber-600 text-white' :
-                                                    'bg-white/20 text-white'
+                                        bid.rank === 2 ? 'bg-gray-300 text-black' :
+                                            bid.rank === 3 ? 'bg-amber-600 text-white' :
+                                                'bg-white/20 text-white'
                                         }`}>
                                         {bid.rank}
                                     </div>
