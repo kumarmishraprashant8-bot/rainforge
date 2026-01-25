@@ -100,7 +100,7 @@ const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090] }: RoofMa
             const geoJSON = polygon.toGeoJSON();
 
             // Calculate area in square meters using Leaflet's method
-            const areaM2 = L.GeometryUtil ?
+            const areaM2 = (L as any).GeometryUtil ?
                 (L as any).GeometryUtil.geodesicArea(latlngs) :
                 calculateArea(latlngs);
 

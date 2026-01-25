@@ -170,7 +170,7 @@ const PublicDashboard = () => {
                                 <YAxis dataKey="ward_name" type="category" stroke="#94a3b8" width={120} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px' }}
-                                    formatter={(value: number) => [`${(value / 1000000).toFixed(2)}M liters`, 'Captured']}
+                                    formatter={(value: any) => [`${(Number(value) / 1000000).toFixed(2)}M liters`, 'Captured']}
                                 />
                                 <Bar dataKey="captured" radius={[0, 8, 8, 0]}>
                                     {stats?.wards.map((_, index) => (
