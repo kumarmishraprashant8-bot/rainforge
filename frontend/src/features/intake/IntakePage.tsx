@@ -38,7 +38,7 @@ const IntakePage = () => {
             navigate(`/assess/${response.data.project_id}`, { state: { result: response.data } });
         } catch (error) {
             console.error(error);
-            alert("Failed to submit assessment. Make sure backend is running on port 8000.");
+            alert("Failed to submit assessment. Backend may be starting up - please try again in 30 seconds.");
         } finally {
             setLoading(false);
         }
