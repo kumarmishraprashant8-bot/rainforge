@@ -1,0 +1,96 @@
+# RainForge Configuration
+# Copy to config.yml and customize for your environment
+
+# Environment: demo | staging | production
+environment: demo
+
+# Database
+database:
+  # SQLite for demo (change to postgres:// for production)
+  url: sqlite:///./rainforge_demo.db
+  # PostgreSQL example:
+  # url: postgresql://user:password@localhost:5432/rainforge
+  echo: false  # Set to true for SQL query logging
+
+# Server
+server:
+  host: 0.0.0.0
+  port: 8000
+  reload: true  # Disable in production
+  workers: 1  # Increase in production
+
+# External Data Sources
+data_sources:
+  rainfall:
+    # Primary: Open-Meteo (free, no API key required)
+    primary:
+      provider: open-meteo
+      base_url: https://api.open-meteo.com/v1
+      timeout_seconds: 10
+    # Fallback: IMD (placeholder - requires registration)
+    fallback:
+      provider: imd
+      base_url: https://api.imd.gov.in  # Placeholder
+      api_key: ${IMD_API_KEY}
+    # Historical: CHIRPS NetCDF (for research)
+    historical:
+      provider: chirps
+      data_path: ./data/chirps/
+  
+  geocoding:
+    # Primary: Nominatim (OpenStreetMap)
+    provider: nominatim
+    base_url: https://nominatim.openstreetmap.org
+    rate_limit_ms: 1000  # 1 request per second
+  
+  groundwater:
+    # CGWB data (placeholder)
+    provider: cgwb
+    data_path: ./data/cgwb/
+
+# Fraud Detection
+fraud_detection:
+  enabled: true
+  thresholds:
+    geofence_pass_m: 50
+    geofence_warn_m: 200
+    geofence_flag_m: 500
+    photo_age_hours_max: 48
+  
+  scoring:
+    no_exif: 0.4
+    no_gps: 0.3
+    location_severe: 0.6
+    location_moderate: 0.3
+    photo_reuse: 0.8
+
+# Payments (mock for demo)
+payments:
+  provider: mock
+  # Production options: stripe, razorpay, payu
+  # api_key: ${PAYMENT_API_KEY}
+
+# IoT/MQTT (mock for demo)
+mqtt:
+  enabled: false
+  broker: localhost
+  port: 1883
+  topic_prefix: rainforge/telemetry/
+
+# Storage
+storage:
+  uploads_dir: ./uploads
+  pdfs_dir: ./generated_pdfs
+  max_photo_size_mb: 10
+
+# Logging
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Security (production only)
+security:
+  # jwt_secret: ${JWT_SECRET}
+  # api_key_header: X-API-Key
+  cors_origins:
+    - "*"  # Restrict in production

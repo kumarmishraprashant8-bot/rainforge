@@ -1,0 +1,132 @@
+# Prometheus Alerting Rules for RainForge
+
+groups:
+  - name: rainforge-backend
+    rules:
+      # High error rate
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} over the last 5 minutes"
+
+      # API latency high
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API latency is high"
+          description: "95th percentile latency is {{ $value }}s"
+
+      # Backend down
+      - alert: BackendDown
+        expr: up{job="rainforge-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "RainForge backend is down"
+          description: "Backend has been down for more than 1 minute"
+
+  - name: rainforge-database
+    rules:
+      # Database connection issues
+      - alert: DatabaseConnectionFailed
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL database is down"
+          description: "Cannot connect to PostgreSQL"
+
+      # High database connections
+      - alert: HighDatabaseConnections
+        expr: pg_stat_activity_count > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of database connections"
+          description: "{{ $value }} active connections"
+
+  - name: rainforge-iot
+    rules:
+      # MQTT broker down
+      - alert: MQTTBrokerDown
+        expr: up{job="mqtt"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "MQTT broker is down"
+          description: "IoT devices cannot connect"
+
+      # Low IoT message rate
+      - alert: LowIoTMessageRate
+        expr: rate(mqtt_messages_received_total[5m]) < 1
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low IoT message rate"
+          description: "IoT telemetry ingestion is below expected rate"
+
+  - name: rainforge-redis
+    rules:
+      # Redis down
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"
+          description: "Session storage and caching unavailable"
+
+      # Redis memory high
+      - alert: RedisMemoryHigh
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Redis memory usage high"
+          description: "Redis is using {{ $value | humanizePercentage }} of max memory"
+
+  - name: rainforge-resources
+    rules:
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value }}%"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }}%"
+
+      # Disk space low
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"}) * 100 < 15
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk space is low"
+          description: "Only {{ $value }}% disk space remaining"

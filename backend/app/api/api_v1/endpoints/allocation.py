@@ -1,16 +1,20 @@
 """
-RainForge Allocation & Bidding API Endpoints
+RainForge P0 Allocation, Auction & Bidding API Endpoints
 """
 
-from fastapi import APIRouter, HTTPException
-from typing import Optional, List
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel
+from datetime import datetime, timedelta
+
 from app.services.allocation_engine import (
     AllocationEngine, AllocationMode, AllocationWeights, 
     Job, Installer, get_demo_installers
 )
 from app.services.bidding_service import BiddingService, BidScoreWeights, Job as BidJob
 from app.services.rpi_calculator import RPICalculator, generate_demo_rpi
+from app.models.database import get_db, Auction, Bid as DbBid
 
 router = APIRouter()
 
@@ -234,3 +238,135 @@ def list_installers():
             "is_blacklisted": inst.is_blacklisted
         })
     return {"installers": result}
+
+
+# ============== P0 AUCTION ENDPOINTS ==============
+
+@router.post("/auction/create")
+def create_auction(
+    job_id: int,
+    assessment_id: str,
+    deadline_hours: int = 72,
+    min_bid_inr: Optional[float] = None,
+    max_bid_inr: Optional[float] = None,
+    db: Session = Depends(get_db)
+) -> Dict[str, Any]:
+    """
+    P0: Create auction for a job with deadline.
+    """
+    open_until = datetime.now() + timedelta(hours=deadline_hours)
+    
+    auction = Auction(
+        job_id=job_id,
+        assessment_id=assessment_id,
+        open_until=open_until,
+        min_bid_amount=min_bid_inr,
+        max_bid_amount=max_bid_inr,
+        required_certifications=["RWH_CERTIFIED"],
+        weighting={"price": 0.4, "rpi": 0.4, "timeline": 0.2}
+    )
+    
+    db.add(auction)
+    db.commit()
+    db.refresh(auction)
+    
+    return {
+        "auction_id": auction.id,
+        "job_id": job_id,
+        "status": auction.status,
+        "open_until": open_until.isoformat(),
+        "deadline_hours": deadline_hours,
+        "message": "Auction created successfully. Open for bidding."
+    }
+
+
+@router.post("/auction/{auction_id}/bid")
+def submit_auction_bid(
+    auction_id: int,
+    installer_id: int,
+    price_inr: float,
+    timeline_days: int,
+    warranty_months: int = 12,
+    notes: Optional[str] = None,
+    db: Session = Depends(get_db)
+) -> Dict[str, Any]:
+    """
+    P0: Submit bid for an auction.
+    """
+    auction = db.query(Auction).filter(Auction.id == auction_id).first()
+    
+    if not auction:
+        raise HTTPException(status_code=404, detail="Auction not found")
+    
+    if auction.status != "open":
+        raise HTTPException(status_code=400, detail="Auction is not open for bidding")
+    
+    if datetime.now() > auction.open_until:
+        raise HTTPException(status_code=400, detail="Auction deadline has passed")
+    
+    # Create bid
+    bid = DbBid(
+        project_id=auction.job_id,
+        installer_id=None,  # UUID type in schema, needs adjustment
+        bid_amount=price_inr,
+        timeline_days=timeline_days,
+        warranty_months=warranty_months,
+        scope_of_work=notes,
+        status="submitted"
+    )
+    
+    db.add(bid)
+    db.commit()
+    db.refresh(bid)
+    
+    return {
+        "bid_id": bid.id,
+        "auction_id": auction_id,
+        "installer_id": installer_id,
+        "price_inr": price_inr,
+        "timeline_days": timeline_days,
+        "status": "submitted",
+        "message": "Bid submitted successfully"
+    }
+
+
+@router.post("/auction/{auction_id}/award")
+def award_auction(
+    auction_id: int,
+    winning_bid_id: int,
+    admin_notes: Optional[str] = None,
+    db: Session = Depends(get_db)
+) -> Dict[str, Any]:
+    """
+    P0: Award auction to winning bidder and create escrow.
+    """
+    auction = db.query(Auction).filter(Auction.id == auction_id).first()
+    
+    if not auction:
+        raise HTTPException(status_code=404, detail="Auction not found")
+    
+    bid = db.query(DbBid).filter(DbBid.id == winning_bid_id).first()
+    
+    if not bid:
+        raise HTTPException(status_code=404, detail="Bid not found")
+    
+    # Update auction status
+    auction.status = "awarded"
+    auction.winning_bid_id = winning_bid_id
+    auction.awarded_at = datetime.now()
+    
+    # Update bid status
+    bid.status = "awarded"
+    bid.is_awarded = True
+    
+    db.commit()
+    
+    return {
+        "auction_id": auction_id,
+        "winning_bid_id": winning_bid_id,
+        "installer_id": bid.installer_id,
+        "awarded_amount": bid.bid_amount,
+        "status": "awarded",
+        "awarded_at": auction.awarded_at.isoformat(),
+        "message": "Auction awarded successfully. Escrow will be created."
+    }

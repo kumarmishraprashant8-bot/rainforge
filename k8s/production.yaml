@@ -1,0 +1,304 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rainforge
+  labels:
+    app: rainforge
+    env: production
+
+---
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rainforge-backend
+  namespace: rainforge
+  labels:
+    app: rainforge
+    component: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rainforge
+      component: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: rainforge
+        component: backend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/rainforge/backend:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rainforge-secrets
+                  key: database-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rainforge-secrets
+                  key: redis-url
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rainforge-secrets
+                  key: jwt-secret
+            - name: ALLOWED_ORIGINS
+              value: "https://rainforge.gov.in,https://admin.rainforge.gov.in"
+            - name: DEBUG
+              value: "false"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: rainforge-backend
+  namespace: rainforge
+  labels:
+    app: rainforge
+    component: backend
+spec:
+  selector:
+    app: rainforge
+    component: backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+  type: ClusterIP
+
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rainforge-frontend
+  namespace: rainforge
+  labels:
+    app: rainforge
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rainforge
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: rainforge
+        component: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/rainforge/frontend:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: rainforge-frontend
+  namespace: rainforge
+spec:
+  selector:
+    app: rainforge
+    component: frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+# Ingress with TLS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rainforge-ingress
+  namespace: rainforge
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+spec:
+  tls:
+    - hosts:
+        - rainforge.gov.in
+        - api.rainforge.gov.in
+      secretName: rainforge-tls
+  rules:
+    - host: rainforge.gov.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rainforge-frontend
+                port:
+                  number: 80
+    - host: api.rainforge.gov.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rainforge-backend
+                port:
+                  number: 8000
+
+---
+# HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rainforge-backend-hpa
+  namespace: rainforge
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rainforge-backend
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+---
+# Secrets template (apply separately with real values)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rainforge-secrets
+  namespace: rainforge
+type: Opaque
+stringData:
+  database-url: "postgresql://user:password@postgres:5432/rainforge"
+  redis-url: "redis://redis:6379/0"
+  jwt-secret: "your-production-secret-key-here"
+  mqtt-password: "mqtt-secure-password"
+  stripe-secret: "sk_live_xxx"
+  razorpay-secret: "rzp_live_xxx"
+
+---
+# PodDisruptionBudget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: rainforge-backend-pdb
+  namespace: rainforge
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: rainforge
+      component: backend
+
+---
+# NetworkPolicy - restrict traffic
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: rainforge-network-policy
+  namespace: rainforge
+spec:
+  podSelector:
+    matchLabels:
+      app: rainforge
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 8000
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+        - namespaceSelector: {}
+      ports:
+        - protocol: TCP
+          port: 5432  # PostgreSQL
+        - protocol: TCP
+          port: 6379  # Redis
+        - protocol: TCP
+          port: 1883  # MQTT
+        - protocol: TCP
+          port: 443   # External HTTPS

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - RainForge</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --primary: #0ea5e9;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+    
+    .icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    
+    p {
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    button {
+      background: var(--primary);
+      border: none;
+      color: var(--text);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+    }
+    
+    button.secondary {
+      background: var(--surface);
+      border: 1px solid var(--muted);
+    }
+    
+    .queued {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 32px;
+      text-align: left;
+    }
+    
+    .queued h3 {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    
+    .queued-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #334155;
+    }
+    
+    .queued-item:last-child {
+      border-bottom: none;
+    }
+    
+    .queued-icon {
+      width: 36px;
+      height: 36px;
+      background: #0ea5e933;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    
+    .queued-text {
+      flex: 1;
+    }
+    
+    .queued-text strong {
+      display: block;
+      font-size: 14px;
+    }
+    
+    .queued-text span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .status {
+      font-size: 12px;
+      padding: 4px 8px;
+      background: #f59e0b33;
+      color: #f59e0b;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5.5a.5.5 0 01.5.5v7.79l2.15 2.15a.5.5 0 01-.71.7l-2.5-2.5a.5.5 0 01-.14-.35V6a.5.5 0 01.5-.5z"/>
+      <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+      <path stroke-dasharray="3 3" d="M2 12h2m16 0h2M12 2v2m0 16v2"/>
+    </svg>
+    
+    <h1>You're Offline</h1>
+    <p>
+      Don't worry! Your work is saved locally and will sync automatically when you're back online.
+    </p>
+    
+    <div class="actions">
+      <button onclick="location.reload()">
+        🔄 Try Again
+      </button>
+      <button class="secondary" onclick="goToQueue()">
+        📋 View Queued Items
+      </button>
+    </div>
+    
+    <div class="queued" id="queuedItems" style="display: none;">
+      <h3>📥 QUEUED FOR SYNC</h3>
+      <div id="queueList"></div>
+    </div>
+  </div>
+  
+  <script>
+    // Check queued items
+    async function loadQueuedItems() {
+      try {
+        const request = indexedDB.open('rainforge-offline', 1);
+        
+        request.onsuccess = () => {
+          const db = request.result;
+          
+          if (!db.objectStoreNames.contains('verification-queue')) {
+            return;
+          }
+          
+          const tx = db.transaction('verification-queue', 'readonly');
+          const store = tx.objectStore('verification-queue');
+          const getAll = store.getAll();
+          
+          getAll.onsuccess = () => {
+            const items = getAll.result;
+            if (items.length > 0) {
+              displayQueuedItems(items);
+            }
+          };
+        };
+      } catch (e) {
+        console.log('No queued items');
+      }
+    }
+    
+    function displayQueuedItems(items) {
+      const container = document.getElementById('queuedItems');
+      const list = document.getElementById('queueList');
+      
+      container.style.display = 'block';
+      
+      list.innerHTML = items.map(item => `
+        <div class="queued-item">
+          <div class="queued-icon">📷</div>
+          <div class="queued-text">
+            <strong>Job #${item.job_id || item.id}</strong>
+            <span>Queued ${new Date(item.timestamp || Date.now()).toLocaleString()}</span>
+          </div>
+          <div class="status">Pending</div>
+        </div>
+      `).join('');
+    }
+    
+    function goToQueue() {
+      const container = document.getElementById('queuedItems');
+      container.style.display = container.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    // Check online status
+    window.addEventListener('online', () => {
+      location.reload();
+    });
+    
+    loadQueuedItems();
+  </script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+{
+    "metadata": {
+        "generated_at": "2026-02-03T12:00:00Z",
+        "project_count": 5,
+        "duration_hours": 24,
+        "interval_seconds": 1800
+    },
+    "readings": [
+        {
+            "project_id": 1,
+            "device_id": "DEV-001-TANK",
+            "device_type": "tank_level",
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T12:00:00Z",
+                    "value": 3500,
+                    "unit": "liters",
+                    "battery_pct": 92,
+                    "signal_rssi": -45
+                },
+                {
+                    "timestamp": "2026-02-02T12:30:00Z",
+                    "value": 3480,
+                    "unit": "liters",
+                    "battery_pct": 92,
+                    "signal_rssi": -47
+                },
+                {
+                    "timestamp": "2026-02-02T13:00:00Z",
+                    "value": 3450,
+                    "unit": "liters",
+                    "battery_pct": 91,
+                    "signal_rssi": -46
+                },
+                {
+                    "timestamp": "2026-02-02T13:30:00Z",
+                    "value": 3420,
+                    "unit": "liters",
+                    "battery_pct": 91,
+                    "signal_rssi": -48
+                },
+                {
+                    "timestamp": "2026-02-02T14:00:00Z",
+                    "value": 3380,
+                    "unit": "liters",
+                    "battery_pct": 91,
+                    "signal_rssi": -45
+                },
+                {
+                    "timestamp": "2026-02-02T14:30:00Z",
+                    "value": 3350,
+                    "unit": "liters",
+                    "battery_pct": 90,
+                    "signal_rssi": -44
+                },
+                {
+                    "timestamp": "2026-02-02T15:00:00Z",
+                    "value": 3680,
+                    "unit": "liters",
+                    "battery_pct": 90,
+                    "signal_rssi": -46,
+                    "event": "rainfall_capture"
+                },
+                {
+                    "timestamp": "2026-02-02T15:30:00Z",
+                    "value": 3850,
+                    "unit": "liters",
+                    "battery_pct": 90,
+                    "signal_rssi": -45,
+                    "event": "rainfall_capture"
+                },
+                {
+                    "timestamp": "2026-02-02T16:00:00Z",
+                    "value": 3920,
+                    "unit": "liters",
+                    "battery_pct": 89,
+                    "signal_rssi": -47
+                },
+                {
+                    "timestamp": "2026-02-02T16:30:00Z",
+                    "value": 3890,
+                    "unit": "liters",
+                    "battery_pct": 89,
+                    "signal_rssi": -46
+                },
+                {
+                    "timestamp": "2026-02-02T17:00:00Z",
+                    "value": 3850,
+                    "unit": "liters",
+                    "battery_pct": 89,
+                    "signal_rssi": -48
+                },
+                {
+                    "timestamp": "2026-02-02T17:30:00Z",
+                    "value": 3800,
+                    "unit": "liters",
+                    "battery_pct": 88,
+                    "signal_rssi": -45
+                }
+            ]
+        },
+        {
+            "project_id": 1,
+            "device_id": "DEV-001-FLOW",
+            "device_type": "flow_meter",
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T12:00:00Z",
+                    "value": 0,
+                    "unit": "lpm",
+                    "cumulative_liters": 12500
+                },
+                {
+                    "timestamp": "2026-02-02T12:30:00Z",
+                    "value": 2.5,
+                    "unit": "lpm",
+                    "cumulative_liters": 12515
+                },
+                {
+                    "timestamp": "2026-02-02T13:00:00Z",
+                    "value": 3.2,
+                    "unit": "lpm",
+                    "cumulative_liters": 12540
+                },
+                {
+                    "timestamp": "2026-02-02T13:30:00Z",
+                    "value": 0,
+                    "unit": "lpm",
+                    "cumulative_liters": 12540
+                },
+                {
+                    "timestamp": "2026-02-02T14:00:00Z",
+                    "value": 0,
+                    "unit": "lpm",
+                    "cumulative_liters": 12540
+                },
+                {
+                    "timestamp": "2026-02-02T14:30:00Z",
+                    "value": 4.8,
+                    "unit": "lpm",
+                    "cumulative_liters": 12580
+                },
+                {
+                    "timestamp": "2026-02-02T15:00:00Z",
+                    "value": 18.5,
+                    "unit": "lpm",
+                    "cumulative_liters": 12850,
+                    "event": "rainfall_inflow"
+                },
+                {
+                    "timestamp": "2026-02-02T15:30:00Z",
+                    "value": 12.3,
+                    "unit": "lpm",
+                    "cumulative_liters": 13100,
+                    "event": "rainfall_inflow"
+                },
+                {
+                    "timestamp": "2026-02-02T16:00:00Z",
+                    "value": 2.1,
+                    "unit": "lpm",
+                    "cumulative_liters": 13140
+                },
+                {
+                    "timestamp": "2026-02-02T16:30:00Z",
+                    "value": 0,
+                    "unit": "lpm",
+                    "cumulative_liters": 13140
+                },
+                {
+                    "timestamp": "2026-02-02T17:00:00Z",
+                    "value": 3.5,
+                    "unit": "lpm",
+                    "cumulative_liters": 13175
+                },
+                {
+                    "timestamp": "2026-02-02T17:30:00Z",
+                    "value": 2.8,
+                    "unit": "lpm",
+                    "cumulative_liters": 13200
+                }
+            ]
+        },
+        {
+            "project_id": 2,
+            "device_id": "DEV-002-TANK",
+            "device_type": "tank_level",
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T12:00:00Z",
+                    "value": 8200,
+                    "unit": "liters",
+                    "battery_pct": 85,
+                    "signal_rssi": -52
+                },
+                {
+                    "timestamp": "2026-02-02T12:30:00Z",
+                    "value": 8150,
+                    "unit": "liters",
+                    "battery_pct": 85,
+                    "signal_rssi": -50
+                },
+                {
+                    "timestamp": "2026-02-02T13:00:00Z",
+                    "value": 8080,
+                    "unit": "liters",
+                    "battery_pct": 84,
+                    "signal_rssi": -51
+                },
+                {
+                    "timestamp": "2026-02-02T13:30:00Z",
+                    "value": 7950,
+                    "unit": "liters",
+                    "battery_pct": 84,
+                    "signal_rssi": -53
+                },
+                {
+                    "timestamp": "2026-02-02T14:00:00Z",
+                    "value": 7880,
+                    "unit": "liters",
+                    "battery_pct": 84,
+                    "signal_rssi": -52
+                },
+                {
+                    "timestamp": "2026-02-02T14:30:00Z",
+                    "value": 7800,
+                    "unit": "liters",
+                    "battery_pct": 83,
+                    "signal_rssi": -50
+                }
+            ]
+        },
+        {
+            "project_id": 3,
+            "device_id": "DEV-003-QUALITY",
+            "device_type": "water_quality",
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T12:00:00Z",
+                    "ph": 7.2,
+                    "tds_ppm": 185,
+                    "turbidity_ntu": 2.1,
+                    "temperature_c": 24.5
+                },
+                {
+                    "timestamp": "2026-02-02T14:00:00Z",
+                    "ph": 7.1,
+                    "tds_ppm": 190,
+                    "turbidity_ntu": 2.3,
+                    "temperature_c": 25.1
+                },
+                {
+                    "timestamp": "2026-02-02T16:00:00Z",
+                    "ph": 7.3,
+                    "tds_ppm": 178,
+                    "turbidity_ntu": 3.8,
+                    "temperature_c": 24.8,
+                    "event": "post_rainfall"
+                },
+                {
+                    "timestamp": "2026-02-02T18:00:00Z",
+                    "ph": 7.2,
+                    "tds_ppm": 182,
+                    "turbidity_ntu": 2.5,
+                    "temperature_c": 23.9
+                }
+            ]
+        },
+        {
+            "project_id": 4,
+            "device_id": "DEV-004-TANK",
+            "device_type": "tank_level",
+            "alert": {
+                "type": "low_battery",
+                "triggered_at": "2026-02-02T10:00:00Z",
+                "battery_pct": 12
+            },
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T08:00:00Z",
+                    "value": 1200,
+                    "unit": "liters",
+                    "battery_pct": 15,
+                    "signal_rssi": -65
+                },
+                {
+                    "timestamp": "2026-02-02T10:00:00Z",
+                    "value": 1150,
+                    "unit": "liters",
+                    "battery_pct": 12,
+                    "signal_rssi": -68
+                }
+            ]
+        },
+        {
+            "project_id": 5,
+            "device_id": "DEV-005-TANK",
+            "device_type": "tank_level",
+            "alert": {
+                "type": "overflow_risk",
+                "triggered_at": "2026-02-02T15:30:00Z",
+                "current_pct": 92,
+                "forecast_rainfall_mm": 25
+            },
+            "readings": [
+                {
+                    "timestamp": "2026-02-02T12:00:00Z",
+                    "value": 4200,
+                    "unit": "liters",
+                    "battery_pct": 78,
+                    "signal_rssi": -42,
+                    "tank_capacity": 5000
+                },
+                {
+                    "timestamp": "2026-02-02T13:00:00Z",
+                    "value": 4350,
+                    "unit": "liters",
+                    "battery_pct": 78,
+                    "signal_rssi": -44
+                },
+                {
+                    "timestamp": "2026-02-02T14:00:00Z",
+                    "value": 4500,
+                    "unit": "liters",
+                    "battery_pct": 77,
+                    "signal_rssi": -43
+                },
+                {
+                    "timestamp": "2026-02-02T15:00:00Z",
+                    "value": 4600,
+                    "unit": "liters",
+                    "battery_pct": 77,
+                    "signal_rssi": -45,
+                    "event": "overflow_warning"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+id,name,company,lat,lng,rpi_score,capacity_available,capacity_max,cert_level,service_areas,sla_compliance_pct,warranty_months,specialization
+1,Ramesh Kumar,AquaTech Solutions,28.6139,77.2090,92.5,5,10,premium,"Delhi,Noida,Gurgaon",96.0,24,residential
+2,Priya Sharma,GreenWater Systems,28.4595,77.0266,78.3,3,8,certified,"Gurgaon,Faridabad",88.5,18,commercial
+3,Mohammed Ali,EcoRain Pvt Ltd,19.0760,72.8777,85.1,7,15,premium,"Mumbai,Thane,Navi Mumbai",92.0,24,all
+4,Suresh Reddy,JalSeva Enterprises,12.9716,77.5946,61.2,2,5,basic,"Bangalore,Mysore",75.0,12,residential
+5,Lakshmi Devi,RainHarvest Co,17.3850,78.4867,88.7,4,10,certified,"Hyderabad,Secunderabad",94.5,18,all
+6,Vikram Singh,AquaSave India,13.0827,80.2707,45.8,1,3,basic,"Chennai,Kanchipuram",65.0,12,residential

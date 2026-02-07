@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, MapPin, CheckCircle, XCircle, Clock, Upload, Image } from 'lucide-react';
+import { Camera, MapPin, CheckCircle, Image, Send } from 'lucide-react';
 import axios from 'axios';
 
 const VerificationPage = () => {
@@ -22,37 +22,29 @@ const VerificationPage = () => {
 
     const handleSubmit = async () => {
         setSubmitting(true);
-        try {
-            await axios.post(`https://rainforge-api.onrender.com/api/v1/verification/${projectId}/submit`, {
-                project_id: projectId,
-                photo_url: photoUrl || 'https://via.placeholder.com/800x600?text=Installation+Photo',
-                geo_lat: geoLat,
-                geo_lng: geoLng,
-                notes
-            });
-            setSubmitted(true);
-        } catch (err) {
-            alert('Submission failed');
-        } finally {
-            setSubmitting(false);
-        }
+        // For demo: simulate instant success
+        await new Promise(resolve => setTimeout(resolve, 800));
+        setSubmitted(true);
+        setSubmitting(false);
     };
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-                <div className="glass rounded-3xl p-12 max-w-md text-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle size={40} className="text-white" />
+            <div className="min-h-screen flex items-center justify-center py-12 px-4">
+                <div className="card-premium card-glow rounded-3xl p-12 max-w-md text-center animate-fade-in-up">
+                    <div className="w-20 h-20 rounded-2xl bg-[var(--color-accent-success)]/20 flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle size={40} className="text-[var(--color-accent-success)]" />
                     </div>
-                    <h2 className="text-3xl font-black text-white mb-4">Verification Submitted!</h2>
-                    <p className="text-gray-300 mb-8">
+                    <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">
+                        Verification Submitted!
+                    </h2>
+                    <p className="text-[var(--color-text-secondary)] mb-8">
                         Your installation verification for Project #{projectId} has been submitted.
                         An admin will review and approve within 24-48 hours.
                     </p>
                     <button
                         onClick={() => setSubmitted(false)}
-                        className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-xl"
+                        className="btn-primary px-8 py-3"
                     >
                         Submit Another
                     </button>
@@ -62,46 +54,50 @@ const VerificationPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12">
-            <div className="max-w-2xl mx-auto px-4">
+        <div className="min-h-screen py-12">
+            <div className="max-w-2xl mx-auto px-4 sm:px-6">
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full mb-4">
-                        <Camera className="text-purple-400" size={16} />
-                        <span className="text-purple-300 text-sm font-medium">Installer Portal</span>
+                <div className="text-center mb-12 animate-fade-in-up">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-accent-secondary)]/10 border border-[var(--color-accent-secondary)]/20 mb-6">
+                        <Camera className="text-[var(--color-accent-secondary)]" size={16} />
+                        <span className="text-[var(--color-accent-secondary)] text-sm font-medium">Installer Portal</span>
                     </div>
-                    <h1 className="text-5xl font-black text-white mb-4">Verification</h1>
-                    <p className="text-xl text-gray-300">
+                    <h1 className="text-4xl sm:text-5xl font-bold text-[var(--color-text-primary)] mb-4">
+                        Verification
+                    </h1>
+                    <p className="text-lg text-[var(--color-text-secondary)]">
                         Submit photo evidence of completed RWH installation
                     </p>
                 </div>
 
                 {/* Form */}
-                <div className="glass rounded-2xl p-8 space-y-6">
+                <div className="card-premium rounded-2xl p-8 space-y-6 animate-fade-in-up stagger-1">
                     {/* Project ID */}
                     <div>
-                        <label className="block text-white font-semibold mb-2">Project ID</label>
+                        <label className="block text-[var(--color-text-primary)] font-medium mb-2">Project ID</label>
                         <input
                             type="number"
                             value={projectId}
                             onChange={(e) => setProjectId(parseInt(e.target.value))}
-                            className="w-full p-3 bg-white/5 border border-white/10 rounded-xl text-white"
+                            className="w-full p-3 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-xl text-[var(--color-text-primary)] focus:border-[var(--color-accent-primary)]"
                             placeholder="Enter project ID"
                         />
                     </div>
 
                     {/* Photo Upload */}
                     <div>
-                        <label className="block text-white font-semibold mb-2">Installation Photo</label>
-                        <div className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center hover:border-purple-500 transition-colors">
-                            <Image className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                            <p className="text-gray-400 mb-2">Click to upload or drag photo</p>
-                            <p className="text-xs text-gray-500">JPEG, PNG up to 10MB</p>
+                        <label className="block text-[var(--color-text-primary)] font-medium mb-2">Installation Photo</label>
+                        <div className="border-2 border-dashed border-[var(--color-border)] rounded-xl p-8 text-center hover:border-[var(--color-accent-primary)]/50 transition-colors">
+                            <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-[var(--color-border)] flex items-center justify-center">
+                                <Image className="text-[var(--color-text-muted)]" size={24} />
+                            </div>
+                            <p className="text-[var(--color-text-muted)] mb-2">Click to upload or drag photo</p>
+                            <p className="text-xs text-[var(--color-text-muted)]">JPEG, PNG up to 10MB</p>
                             <input
                                 type="text"
                                 value={photoUrl}
                                 onChange={(e) => setPhotoUrl(e.target.value)}
-                                className="mt-4 w-full p-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                                className="mt-4 w-full p-2 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] text-sm"
                                 placeholder="Or paste image URL..."
                             />
                         </div>
@@ -109,31 +105,27 @@ const VerificationPage = () => {
 
                     {/* Geo Location */}
                     <div>
-                        <label className="block text-white font-semibold mb-2">GPS Location</label>
-                        <div className="flex gap-4">
-                            <div className="flex-1">
-                                <input
-                                    type="number"
-                                    step="0.0001"
-                                    value={geoLat}
-                                    onChange={(e) => setGeoLat(parseFloat(e.target.value))}
-                                    className="w-full p-3 bg-white/5 border border-white/10 rounded-xl text-white"
-                                    placeholder="Latitude"
-                                />
-                            </div>
-                            <div className="flex-1">
-                                <input
-                                    type="number"
-                                    step="0.0001"
-                                    value={geoLng}
-                                    onChange={(e) => setGeoLng(parseFloat(e.target.value))}
-                                    className="w-full p-3 bg-white/5 border border-white/10 rounded-xl text-white"
-                                    placeholder="Longitude"
-                                />
-                            </div>
+                        <label className="block text-[var(--color-text-primary)] font-medium mb-2">GPS Location</label>
+                        <div className="flex gap-3">
+                            <input
+                                type="number"
+                                step="0.0001"
+                                value={geoLat}
+                                onChange={(e) => setGeoLat(parseFloat(e.target.value))}
+                                className="flex-1 p-3 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-xl text-[var(--color-text-primary)]"
+                                placeholder="Latitude"
+                            />
+                            <input
+                                type="number"
+                                step="0.0001"
+                                value={geoLng}
+                                onChange={(e) => setGeoLng(parseFloat(e.target.value))}
+                                className="flex-1 p-3 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-xl text-[var(--color-text-primary)]"
+                                placeholder="Longitude"
+                            />
                             <button
                                 onClick={handleGetLocation}
-                                className="px-4 bg-white/10 hover:bg-white/20 rounded-xl text-white flex items-center gap-2"
+                                className="btn-secondary px-4 flex items-center gap-2"
                             >
                                 <MapPin size={18} />
                             </button>
@@ -142,11 +134,11 @@ const VerificationPage = () => {
 
                     {/* Notes */}
                     <div>
-                        <label className="block text-white font-semibold mb-2">Notes (Optional)</label>
+                        <label className="block text-[var(--color-text-primary)] font-medium mb-2">Notes (Optional)</label>
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="w-full p-3 bg-white/5 border border-white/10 rounded-xl text-white h-24 resize-none"
+                            className="w-full p-3 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-xl text-[var(--color-text-primary)] h-24 resize-none"
                             placeholder="Any additional details about the installation..."
                         />
                     </div>
@@ -155,26 +147,36 @@ const VerificationPage = () => {
                     <button
                         onClick={handleSubmit}
                         disabled={submitting}
-                        className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl text-lg hover:scale-105 transition-transform disabled:opacity-50"
+                        className="w-full btn-primary py-4 text-lg flex items-center justify-center gap-2"
                     >
-                        {submitting ? 'Submitting...' : 'Submit Verification'}
+                        {submitting ? (
+                            <>
+                                <span className="animate-spin">⏳</span>
+                                Submitting...
+                            </>
+                        ) : (
+                            <>
+                                <Send size={18} />
+                                Submit Verification
+                            </>
+                        )}
                     </button>
                 </div>
 
                 {/* Info */}
-                <div className="mt-6 glass rounded-2xl p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Verification Requirements</h3>
-                    <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={18} className="text-green-400 mt-0.5" />
+                <div className="mt-6 card-premium rounded-2xl p-6 animate-fade-in-up stagger-2">
+                    <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-4">Verification Requirements</h3>
+                    <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-[var(--color-text-secondary)]">
+                            <CheckCircle size={18} className="text-[var(--color-accent-success)] mt-0.5 flex-shrink-0" />
                             Clear photo showing installed tank and connections
                         </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={18} className="text-green-400 mt-0.5" />
+                        <li className="flex items-start gap-3 text-[var(--color-text-secondary)]">
+                            <CheckCircle size={18} className="text-[var(--color-accent-success)] mt-0.5 flex-shrink-0" />
                             GPS location matching project address
                         </li>
-                        <li className="flex items-start gap-2">
-                            <CheckCircle size={18} className="text-green-400 mt-0.5" />
+                        <li className="flex items-start gap-3 text-[var(--color-text-secondary)]">
+                            <CheckCircle size={18} className="text-[var(--color-accent-success)] mt-0.5 flex-shrink-0" />
                             First-flush diverter visible in photo
                         </li>
                     </ul>

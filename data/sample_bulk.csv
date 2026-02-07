@@ -1,0 +1,102 @@
+site_id,address,lat,lng,roof_area_sqm,roof_material,floors,people,state,city,monthly_bill,storage_pref,building_type
+SITE-001,123 Gandhi Road,28.6139,77.2090,150,concrete,2,5,Delhi,New Delhi,850,tank,residential
+SITE-002,45 MG Road Sector 5,28.4595,77.0266,220,metal,3,8,Delhi,Gurugram,1200,tank,commercial
+SITE-003,Government School Block A,28.7041,77.1025,500,concrete,2,100,Delhi,New Delhi,5000,hybrid,government
+SITE-004,Rajiv Nagar Colony House 12,28.6280,77.2197,100,tiles,1,4,Delhi,New Delhi,600,tank,residential
+SITE-005,Industrial Estate Unit 7,28.4089,77.3178,800,metal,1,20,Delhi,Faridabad,3500,recharge,industrial
+SITE-006,Apollo Hospital Annex,19.0760,72.8777,1200,concrete,5,200,Maharashtra,Mumbai,15000,hybrid,commercial
+SITE-007,Housing Society A-Block,19.0176,72.8302,350,concrete,4,60,Maharashtra,Mumbai,4500,tank,residential
+SITE-008,Municipal Office Thane,19.2183,72.9781,280,tiles,2,30,Maharashtra,Thane,2800,tank,government
+SITE-009,Tech Park Building 3,12.9716,77.5946,650,metal,3,150,Karnataka,Bangalore,8500,hybrid,commercial
+SITE-010,Residential Villa JP Nagar,12.9081,77.5824,180,tiles,2,6,Karnataka,Bangalore,950,tank,residential
+SITE-011,IT Park Electronic City,12.8456,77.6603,1500,metal,4,300,Karnataka,Bangalore,22000,hybrid,commercial
+SITE-012,Government Hospital Wing C,12.9352,77.5389,750,concrete,3,150,Karnataka,Bangalore,9000,hybrid,government
+SITE-013,Apartment Complex Tower B,13.0827,80.2707,400,concrete,8,120,Tamil Nadu,Chennai,6000,tank,residential
+SITE-014,School Campus Main Building,13.0569,80.2425,550,tiles,2,200,Tamil Nadu,Chennai,4200,hybrid,government
+SITE-015,Manufacturing Unit 4,13.0878,80.1521,2000,metal,1,50,Tamil Nadu,Chennai,12000,recharge,industrial
+SITE-016,Heritage Hotel Annexe,22.5726,88.3639,320,tiles,3,80,West Bengal,Kolkata,5500,tank,commercial
+SITE-017,University Campus Block D,22.5448,88.3426,800,concrete,4,300,West Bengal,Kolkata,8000,hybrid,government
+SITE-018,Residential Colony Plot 23,17.3850,78.4867,120,concrete,2,5,Telangana,Hyderabad,720,tank,residential
+SITE-019,Software Park Tower A,17.4300,78.4512,900,metal,6,200,Telangana,Hyderabad,14000,hybrid,commercial
+SITE-020,Municipal School Secunderabad,17.4399,78.4983,350,tiles,2,150,Telangana,Hyderabad,3200,tank,government
+SITE-021,Warehouse District 5,28.5355,77.3910,1200,metal,1,15,Delhi,Noida,4500,recharge,industrial
+SITE-022,Shopping Mall Level 1,28.5672,77.3211,2500,concrete,4,500,Delhi,Noida,35000,hybrid,commercial
+SITE-023,Village Panchayat Office,28.8955,77.0953,180,tiles,1,20,Delhi,Sonipat,1200,tank,government
+SITE-024,Farm House Plot 7,28.7894,77.1278,250,metal,1,8,Delhi,New Delhi,800,recharge,residential
+SITE-025,Temple Complex,19.0821,72.8861,450,tiles,2,50,Maharashtra,Mumbai,3000,tank,residential
+SITE-026,Railway Station Building,19.1756,72.9510,1800,metal,2,1000,Maharashtra,Mumbai,45000,hybrid,government
+SITE-027,College Main Block,18.5204,73.8567,600,concrete,3,400,Maharashtra,Pune,7500,hybrid,government
+SITE-028,Society Club House,18.5074,73.8077,200,tiles,2,100,Maharashtra,Pune,2200,tank,residential
+SITE-029,Manufacturing Plant A,18.6298,73.7997,3000,metal,1,80,Maharashtra,Pune,18000,recharge,industrial
+SITE-030,Startup Hub Floor 2,12.9141,77.6369,350,concrete,3,60,Karnataka,Bangalore,5500,tank,commercial
+SITE-031,Lake View Apartments,12.9810,77.5996,280,concrete,6,90,Karnataka,Bangalore,4800,tank,residential
+SITE-032,Fire Station,12.9698,77.7500,220,metal,1,25,Karnataka,Bangalore,2000,tank,government
+SITE-033,Convention Center,12.9263,77.6762,4000,concrete,2,800,Karnataka,Bangalore,55000,hybrid,commercial
+SITE-034,Tea Garden Bungalow,11.4102,76.6950,300,tiles,2,12,Tamil Nadu,Ooty,1800,tank,residential
+SITE-035,Hill Station Hotel,11.4025,76.6877,500,tiles,3,100,Tamil Nadu,Ooty,8000,tank,commercial
+SITE-036,Forest Office,11.3410,76.7837,150,tiles,1,10,Tamil Nadu,Nilgiris,900,tank,government
+SITE-037,Beach Resort Main,10.7867,79.1378,800,tiles,2,150,Tamil Nadu,Nagapattinam,12000,hybrid,commercial
+SITE-038,Fishing Cooperative,10.9198,79.8384,200,metal,1,30,Tamil Nadu,Cuddalore,1500,tank,commercial
+SITE-039,Salt Production Unit,10.7620,79.6470,1500,metal,1,25,Tamil Nadu,Nagapattinam,5000,recharge,industrial
+SITE-040,Ashram Complex,27.1751,78.0421,600,concrete,2,200,Uttar Pradesh,Agra,4000,hybrid,residential
+SITE-041,Historical Site Museum,27.1767,78.0081,400,tiles,2,50,Uttar Pradesh,Agra,3500,tank,government
+SITE-042,Hotel Near Taj,27.1715,78.0426,350,concrete,4,120,Uttar Pradesh,Agra,7500,tank,commercial
+SITE-043,University Hostel Block E,26.8467,80.9462,450,concrete,4,200,Uttar Pradesh,Lucknow,5500,tank,government
+SITE-044,Shopping Complex,26.8500,80.9200,1200,metal,3,300,Uttar Pradesh,Lucknow,18000,hybrid,commercial
+SITE-045,High Court Annexe,26.8479,80.9519,550,concrete,3,100,Uttar Pradesh,Lucknow,6000,tank,government
+SITE-046,Export Hub Unit 3,26.2389,73.0243,2500,metal,1,60,Rajasthan,Jodhpur,9000,recharge,industrial
+SITE-047,Heritage Haveli,26.2924,73.0169,280,tiles,2,15,Rajasthan,Jodhpur,1800,tank,residential
+SITE-048,Desert Resort,26.9045,70.9167,600,concrete,2,80,Rajasthan,Jaisalmer,10000,recharge,commercial
+SITE-049,Solar Park Control Room,27.0238,70.6867,150,metal,1,8,Rajasthan,Jaisalmer,800,recharge,industrial
+SITE-050,Railway Colony D Block,26.9157,75.7873,200,tiles,3,40,Rajasthan,Jaipur,2400,tank,residential
+SITE-051,Amber Fort Office,26.9855,75.8513,300,tiles,2,20,Rajasthan,Jaipur,1800,tank,government
+SITE-052,IT Tower Floor 5,26.9124,75.7873,400,concrete,8,150,Rajasthan,Jaipur,9000,tank,commercial
+SITE-053,Bio Park Lab Building,15.3647,75.1240,350,concrete,2,50,Karnataka,Hubli,3500,tank,commercial
+SITE-054,Agriculture College,15.3628,74.8376,700,tiles,3,300,Karnataka,Dharwad,6000,hybrid,government
+SITE-055,Textile Mill Unit 2,15.8497,74.4977,2000,metal,1,100,Karnataka,Belgaum,8500,recharge,industrial
+SITE-056,Hospital Main Wing,15.8621,74.5080,600,concrete,4,200,Karnataka,Belgaum,9500,hybrid,government
+SITE-057,Mall Entrance Wing,15.8281,74.5043,1800,metal,2,400,Karnataka,Belgaum,25000,hybrid,commercial
+SITE-058,Temple Trust Building,12.3052,76.6552,400,tiles,1,100,Karnataka,Mysore,2500,tank,residential
+SITE-059,Palace Event Hall,12.3051,76.6551,1000,tiles,2,300,Karnataka,Mysore,15000,hybrid,commercial
+SITE-060,Zoo Administration,12.3024,76.6635,180,tiles,1,15,Karnataka,Mysore,1200,tank,government
+SITE-061,Film Studio Lot 3,17.2403,78.4294,5000,metal,1,150,Telangana,Hyderabad,22000,recharge,commercial
+SITE-062,Pharma Company Unit A,17.4875,78.3871,1500,metal,2,80,Telangana,Hyderabad,12000,hybrid,industrial
+SITE-063,AIIMS Annexe Building,17.3943,78.4854,800,concrete,5,300,Telangana,Hyderabad,18000,hybrid,government
+SITE-064,Celebrity Villa,17.4283,78.4488,400,tiles,3,10,Telangana,Hyderabad,3500,tank,residential
+SITE-065,Metro Station Complex,17.4456,78.3496,250,metal,2,50,Telangana,Hyderabad,4000,tank,government
+SITE-066,Data Center Building,17.4239,78.5450,2200,concrete,3,40,Telangana,Hyderabad,65000,hybrid,commercial
+SITE-067,Village School,16.3067,80.4365,120,tiles,1,80,Andhra Pradesh,Vijayawada,800,tank,government
+SITE-068,Bus Depot Office,16.5062,80.6480,300,metal,1,50,Andhra Pradesh,Vijayawada,2500,tank,government
+SITE-069,Marina Beach Tower,13.0500,80.2824,600,concrete,10,180,Tamil Nadu,Chennai,14000,tank,commercial
+SITE-070,Port Trust Building,13.0878,80.2915,450,concrete,3,60,Tamil Nadu,Chennai,5500,tank,government
+SITE-071,,28.6200,,200,concrete,2,6,Delhi,New Delhi,900,tank,residential
+SITE-072,Incomplete Address Only,,,180,tiles,1,4,Maharashtra,,700,tank,residential
+SITE-073,123 Sample Street,28.6139,77.2090,-50,concrete,2,5,Delhi,New Delhi,800,tank,residential
+SITE-074,456 Test Lane,28.6280,77.2197,150000,metal,1,4,Delhi,New Delhi,600,tank,residential
+SITE-001,Duplicate Site ID Test,28.4595,77.0266,300,concrete,3,10,Delhi,Gurugram,1100,tank,commercial
+SITE-075,Bad Material Type,28.7041,77.1025,200,plastic,2,6,Delhi,New Delhi,750,tank,residential
+SITE-076,Missing People,28.6139,77.2090,180,concrete,2,,Delhi,New Delhi,820,tank,residential
+SITE-077,Strange Storage Pref,28.4089,77.3178,220,metal,1,5,Delhi,Faridabad,680,underground,residential
+SITE-078,Geocode Required Only,Gandhi Nagar Phase 2,,,160,tiles,1,4,Delhi,,720,tank,residential
+SITE-079,Another Geocode Test,MG Road Bangalore,,,250,concrete,3,8,Karnataka,Bangalore,1100,tank,commercial
+SITE-080,Full Data Row A,28.5355,77.3910,175,concrete,2,5,Delhi,Noida,850,tank,residential
+SITE-081,Full Data Row B,28.5672,77.3211,195,metal,1,6,Delhi,Noida,920,hybrid,residential
+SITE-082,Full Data Row C,28.8955,77.0953,210,tiles,2,7,Delhi,Sonipat,980,tank,residential
+SITE-083,Full Data Row D,28.7894,77.1278,165,concrete,1,4,Delhi,New Delhi,780,tank,residential
+SITE-084,Full Data Row E,19.0821,72.8861,230,concrete,3,8,Maharashtra,Mumbai,1150,tank,residential
+SITE-085,Full Data Row F,19.1756,72.9510,185,tiles,2,5,Maharashtra,Mumbai,870,tank,residential
+SITE-086,Full Data Row G,18.5204,73.8567,200,concrete,2,6,Maharashtra,Pune,940,tank,residential
+SITE-087,Full Data Row H,18.5074,73.8077,175,metal,1,4,Maharashtra,Pune,810,hybrid,residential
+SITE-088,Full Data Row I,12.9141,77.6369,220,concrete,3,7,Karnataka,Bangalore,1020,tank,residential
+SITE-089,Full Data Row J,12.9810,77.5996,190,tiles,2,5,Karnataka,Bangalore,880,tank,residential
+SITE-090,Full Data Row K,12.9698,77.7500,205,concrete,2,6,Karnataka,Bangalore,960,tank,residential
+SITE-091,Full Data Row L,13.0827,80.2707,180,tiles,2,5,Tamil Nadu,Chennai,850,tank,residential
+SITE-092,Full Data Row M,13.0569,80.2425,215,concrete,3,7,Tamil Nadu,Chennai,1000,tank,residential
+SITE-093,Full Data Row N,22.5726,88.3639,195,tiles,2,6,West Bengal,Kolkata,910,tank,residential
+SITE-094,Full Data Row O,22.5448,88.3426,170,concrete,2,5,West Bengal,Kolkata,790,tank,residential
+SITE-095,Full Data Row P,17.3850,78.4867,225,metal,2,7,Telangana,Hyderabad,1050,hybrid,residential
+SITE-096,Full Data Row Q,17.4300,78.4512,185,concrete,3,6,Telangana,Hyderabad,860,tank,residential
+SITE-097,Full Data Row R,26.9157,75.7873,200,tiles,2,5,Rajasthan,Jaipur,930,tank,residential
+SITE-098,Full Data Row S,26.9855,75.8513,175,concrete,2,4,Rajasthan,Jaipur,800,tank,residential
+SITE-099,Full Data Row T,27.1751,78.0421,210,tiles,2,6,Uttar Pradesh,Agra,970,tank,residential
+SITE-100,Full Data Row U,26.8467,80.9462,190,concrete,3,5,Uttar Pradesh,Lucknow,890,tank,residential

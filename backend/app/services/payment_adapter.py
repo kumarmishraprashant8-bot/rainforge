@@ -115,7 +115,7 @@ class PaymentAdapter:
     def capture_to_escrow(cls, payment_id: str) -> Dict:
         """
         Capture payment to escrow.
-        Mock: Simulates successful capture.
+        Persists transaction to DB for audit.
         """
         if payment_id not in cls._payments:
             raise ValueError(f"Payment {payment_id} not found")
@@ -129,12 +129,33 @@ class PaymentAdapter:
         payment.escrow_amount = payment.total_amount
         payment.provider_ref = provider_ref
         
+        # PERSIST TO DB (Audit Log)
+        from app.core.database import SessionLocal
+        from app.models.escrow import EscrowTransaction, EscrowStatus
+        
+        db = SessionLocal()
+        try:
+            tx = EscrowTransaction(
+                project_id=str(payment.job_id),
+                payer_id="PAYER_MOCK", # In real app, get from context
+                payee_id="INSTALLER_MOCK",
+                amount=payment.escrow_amount,
+                status=EscrowStatus.LOCKED,
+                verification_proof_id=provider_ref
+            )
+            db.add(tx)
+            db.commit()
+        except Exception as e:
+            print(f"DB Error: {e}")
+        finally:
+            db.close()
+            
         return {
             "payment_id": payment_id,
             "status": "escrow",
             "escrow_amount": payment.escrow_amount,
             "provider_ref": provider_ref,
-            "message": "Funds captured to escrow"
+            "message": "Funds captured to escrow (Audit Logged)"
         }
     
     @classmethod

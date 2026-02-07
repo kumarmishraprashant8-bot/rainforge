@@ -7,44 +7,58 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 interface RoofMapProps {
     onPolygonUpdate: (area: number, geojson: any) => void;
     initialCenter?: [number, number];
+    /** Map type: 'street' | 'satellite' - auto switches tile layer */
+    mapType?: 'street' | 'satellite';
 }
 
-const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090] }: RoofMapProps) => {
+const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090], mapType = 'street' }: RoofMapProps) => {
     const mapRef = useRef<L.Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const [area, setArea] = useState<number | null>(null);
+    const [mapLoaded, setMapLoaded] = useState(false);
     const drawnItemsRef = useRef<L.FeatureGroup | null>(null);
+    const streetLayerRef = useRef<L.TileLayer | null>(null);
+    const satelliteLayerRef = useRef<L.TileLayer | null>(null);
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
 
-        // Initialize map
+        // Initialize map immediately with default center
         const map = L.map(mapContainerRef.current, {
             center: initialCenter,
-            zoom: 18,
+            zoom: 17, // Slightly lower zoom for faster initial load
             zoomControl: true,
         });
         mapRef.current = map;
 
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // Street tiles
+        const streetTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors',
-            maxZoom: 21,
-        }).addTo(map);
+            maxZoom: 19,
+            keepBuffer: 2,
+        });
+        streetLayerRef.current = streetTileLayer;
 
-        // Add satellite imagery option
-        const satellite = L.tileLayer(
+        // Satellite tiles (Esri World Imagery)
+        const satelliteTileLayer = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-            { attribution: '© Esri', maxZoom: 21 }
+            { attribution: '© Esri World Imagery', maxZoom: 19 }
         );
+        satelliteLayerRef.current = satelliteTileLayer;
+
+        // Add initial layer based on mapType prop
+        if (mapType === 'satellite') {
+            satelliteTileLayer.addTo(map);
+            satelliteTileLayer.on('load', () => setMapLoaded(true));
+        } else {
+            streetTileLayer.addTo(map);
+            streetTileLayer.on('load', () => setMapLoaded(true));
+        }
 
         // Layer control
         const baseMaps = {
-            "Street": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap',
-                maxZoom: 21,
-            }),
-            "Satellite": satellite
+            "Street": streetTileLayer,
+            "Satellite": satelliteTileLayer
         };
         L.control.layers(baseMaps).addTo(map);
 
@@ -112,16 +126,20 @@ const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090] }: RoofMa
             setArea(null);
         });
 
-        // Try to get user location
+        // Non-blocking geolocation - map shows immediately, then pans when location is ready
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
-                    map.setView([pos.coords.latitude, pos.coords.longitude], 18);
+                    // Smoothly fly to user location
+                    map.flyTo([pos.coords.latitude, pos.coords.longitude], 18, {
+                        duration: 1.5,
+                        easeLinearity: 0.25
+                    });
                 },
                 () => {
-                    // Default to Delhi if location denied
-                    map.setView(initialCenter, 18);
-                }
+                    // Location denied - already showing default center, no action needed
+                },
+                { timeout: 5000, maximumAge: 60000 } // 5s timeout, cache for 1 min
             );
         }
 
@@ -132,6 +150,27 @@ const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090] }: RoofMa
             }
         };
     }, []);
+
+    // Effect to switch layers when mapType changes
+    useEffect(() => {
+        const map = mapRef.current;
+        const streetLayer = streetLayerRef.current;
+        const satelliteLayer = satelliteLayerRef.current;
+
+        if (!map || !streetLayer || !satelliteLayer) return;
+
+        if (mapType === 'satellite') {
+            if (!map.hasLayer(satelliteLayer)) {
+                map.removeLayer(streetLayer);
+                map.addLayer(satelliteLayer);
+            }
+        } else {
+            if (!map.hasLayer(streetLayer)) {
+                map.removeLayer(satelliteLayer);
+                map.addLayer(streetLayer);
+            }
+        }
+    }, [mapType]);
 
     // Simple area calculation fallback
     const calculateArea = (latlngs: L.LatLng[]): number => {
@@ -154,6 +193,21 @@ const RoofMap = ({ onPolygonUpdate, initialCenter = [28.6139, 77.2090] }: RoofMa
 
     return (
         <div className="relative w-full h-full">
+            {/* Loading skeleton - shows while map tiles are loading */}
+            {!mapLoaded && (
+                <div className="absolute inset-0 z-[999] bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 rounded-xl flex flex-col items-center justify-center">
+                    <div className="relative">
+                        <div className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <svg className="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p className="mt-4 text-gray-300 font-medium animate-pulse">Loading map...</p>
+                    <p className="mt-1 text-gray-500 text-sm">Fetching satellite imagery</p>
+                </div>
+            )}
             <div ref={mapContainerRef} className="w-full h-full rounded-xl" />
 
             {/* Area display overlay */}

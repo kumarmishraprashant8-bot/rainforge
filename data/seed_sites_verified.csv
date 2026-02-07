@@ -1,0 +1,51 @@
+site_id,address,lat,lng,roof_area_sqm,roof_material,floors,people,state,city,monthly_bill,storage_pref,building_type,status,verification_status,fraud_flags,installer_id,assessment_date,capture_annual_liters,tank_capacity_liters,total_cost_inr
+SITE-V001,15 Janpath Road,28.6139,77.2090,150,concrete,2,5,Delhi,New Delhi,850,tank,residential,completed,verified,,INS-001,2025-08-15,89250,5000,42000
+SITE-V002,22 MG Road Sector 5,28.4595,77.0266,220,metal,3,8,Delhi,Gurugram,1200,tank,commercial,completed,verified,,INS-002,2025-09-01,130900,10000,68000
+SITE-V003,Government School Block A,28.7041,77.1025,500,concrete,2,100,Delhi,New Delhi,5000,hybrid,government,completed,verified,,INS-001,2025-07-20,297500,20000,125000
+SITE-V004,Rajiv Nagar House 12,28.6280,77.2197,100,tiles,1,4,Delhi,New Delhi,600,tank,residential,completed,verified,,INS-001,2025-10-10,51000,3000,28000
+SITE-V005,Industrial Estate Unit 7,28.4089,77.3178,800,metal,1,20,Delhi,Faridabad,3500,recharge,industrial,completed,verified,,INS-002,2025-06-15,408000,30000,185000
+SITE-V006,Apollo Hospital Annex,19.0760,72.8777,1200,concrete,5,200,Maharashtra,Mumbai,15000,hybrid,commercial,completed,verified,,INS-003,2025-08-25,734400,50000,320000
+SITE-V007,Housing Society A-Block,19.0176,72.8302,350,concrete,4,60,Maharashtra,Mumbai,4500,tank,residential,completed,verified,,INS-003,2025-09-12,214200,15000,95000
+SITE-V008,Municipal Office Thane,19.2183,72.9781,280,tiles,2,30,Maharashtra,Thane,2800,tank,government,completed,verified,,INS-003,2025-07-08,171360,10000,72000
+SITE-V009,Tech Park Building 3,12.9716,77.5946,650,metal,3,150,Karnataka,Bangalore,8500,hybrid,commercial,completed,verified,,INS-004,2025-10-01,429000,25000,145000
+SITE-V010,Residential Villa JP Nagar,12.9081,77.5824,180,tiles,2,6,Karnataka,Bangalore,950,tank,residential,completed,verified,,INS-004,2025-08-18,118800,8000,52000
+SITE-P011,IT Park Electronic City,12.8456,77.6603,1500,metal,4,300,Karnataka,Bangalore,22000,hybrid,commercial,in_progress,pending,,INS-004,2026-01-15,990000,50000,285000
+SITE-P012,Government Hospital Wing C,12.9352,77.5389,750,concrete,3,150,Karnataka,Bangalore,9000,hybrid,government,in_progress,pending,,INS-004,2026-01-20,495000,30000,165000
+SITE-P013,Apartment Complex Tower B,13.0827,80.2707,400,concrete,8,120,Tamil Nadu,Chennai,6000,tank,residential,in_progress,pending,,INS-006,2026-01-18,228000,15000,98000
+SITE-P014,School Campus Main,13.0569,80.2425,550,tiles,2,200,Tamil Nadu,Chennai,4200,hybrid,government,in_progress,pending,,INS-006,2026-01-25,313500,20000,125000
+SITE-P015,Heritage Hotel Annexe,22.5726,88.3639,320,tiles,3,80,West Bengal,Kolkata,5500,tank,commercial,in_progress,pending,,,2026-02-01,195200,12000,78000
+SITE-F016,Residential Colony Plot 23,17.3850,78.4867,120,concrete,2,5,Telangana,Hyderabad,720,tank,residential,completed,rejected,location_mismatch|photo_reuse,INS-005,2025-11-05,69600,5000,35000
+SITE-F017,Software Park Tower A,17.4300,78.4512,900,metal,6,200,Telangana,Hyderabad,14000,hybrid,commercial,completed,rejected,exif_stripped|timestamp_invalid,INS-005,2025-10-28,522000,35000,195000
+SITE-F018,Municipal School Secunderabad,17.4399,78.4983,350,tiles,2,150,Telangana,Hyderabad,3200,tank,government,completed,flagged,distance_warning,INS-005,2025-12-01,203000,15000,85000
+SITE-F019,Warehouse District 5,28.5355,77.3910,1200,metal,1,15,Delhi,Noida,4500,recharge,industrial,completed,rejected,photo_reuse|software_edited,INS-001,2025-09-22,714000,40000,210000
+SITE-V020,Shopping Mall Level 1,28.5672,77.3211,2500,concrete,4,500,Delhi,Noida,35000,hybrid,commercial,completed,verified,,INS-001,2025-07-30,1487500,100000,520000
+SITE-V021,Village Panchayat Office,28.8955,77.0953,180,tiles,1,20,Delhi,Sonipat,1200,tank,government,completed,verified,,INS-002,2025-08-05,107100,8000,45000
+SITE-V022,Farm House Plot 7,28.7894,77.1278,250,metal,1,8,Delhi,New Delhi,800,recharge,residential,completed,verified,,INS-001,2025-09-18,148750,10000,62000
+SITE-V023,Temple Complex,19.0821,72.8861,450,tiles,2,50,Maharashtra,Mumbai,3000,tank,residential,completed,verified,,INS-003,2025-10-05,275400,18000,98000
+SITE-V024,Railway Station Building,19.1756,72.9510,1800,metal,2,1000,Maharashtra,Mumbai,45000,hybrid,government,completed,verified,,INS-003,2025-06-28,1101600,80000,425000
+SITE-V025,College Main Block,18.5204,73.8567,600,concrete,3,400,Maharashtra,Pune,7500,hybrid,government,completed,verified,,INS-003,2025-08-12,342000,25000,135000
+SITE-V026,Society Club House,18.5074,73.8077,200,tiles,2,100,Maharashtra,Pune,2200,tank,residential,completed,verified,,INS-003,2025-09-25,114000,8000,48000
+SITE-P027,Manufacturing Plant A,18.6298,73.7997,3000,metal,1,80,Maharashtra,Pune,18000,recharge,industrial,in_progress,pending,,,2026-01-28,1710000,100000,485000
+SITE-V028,Startup Hub Floor 2,12.9141,77.6369,350,concrete,3,60,Karnataka,Bangalore,5500,tank,commercial,completed,verified,,INS-004,2025-11-10,231000,15000,92000
+SITE-V029,Lake View Apartments,12.9810,77.5996,280,concrete,6,90,Karnataka,Bangalore,4800,tank,residential,completed,verified,,INS-004,2025-10-22,184800,12000,75000
+SITE-V030,Fire Station,12.9698,77.7500,220,metal,1,25,Karnataka,Bangalore,2000,tank,government,completed,verified,,INS-004,2025-09-08,145200,10000,58000
+SITE-V031,Convention Center,12.9263,77.6762,4000,concrete,2,800,Karnataka,Bangalore,55000,hybrid,commercial,completed,verified,,INS-004,2025-07-15,2640000,150000,685000
+SITE-V032,Tea Garden Bungalow,11.4102,76.6950,300,tiles,2,12,Tamil Nadu,Ooty,1800,tank,residential,completed,verified,,INS-006,2025-08-28,270000,15000,72000
+SITE-V033,Hill Station Hotel,11.4025,76.6877,500,tiles,3,100,Tamil Nadu,Ooty,8000,tank,commercial,completed,verified,,INS-006,2025-09-15,450000,25000,125000
+SITE-P034,Beach Resort Main,10.7867,79.1378,800,tiles,2,150,Tamil Nadu,Nagapattinam,12000,hybrid,commercial,in_progress,pending,,,2026-02-01,480000,30000,165000
+SITE-V035,Ashram Complex,27.1751,78.0421,600,concrete,2,200,Uttar Pradesh,Agra,4000,hybrid,residential,completed,verified,,INS-001,2025-10-18,306000,20000,115000
+SITE-V036,Historical Site Museum,27.1767,78.0081,400,tiles,2,50,Uttar Pradesh,Agra,3500,tank,government,completed,verified,,INS-001,2025-11-02,204000,15000,85000
+SITE-V037,Hotel Near Taj,27.1715,78.0426,350,concrete,4,120,Uttar Pradesh,Agra,7500,tank,commercial,completed,verified,,INS-001,2025-08-22,178500,12000,78000
+SITE-P038,University Hostel Block E,26.8467,80.9462,450,concrete,4,200,Uttar Pradesh,Lucknow,5500,tank,government,in_progress,pending,,,2026-01-12,229500,18000,95000
+SITE-V039,Export Hub Unit 3,26.2389,73.0243,2500,metal,1,60,Rajasthan,Jodhpur,9000,recharge,industrial,completed,verified,,INS-002,2025-07-25,875000,50000,285000
+SITE-V040,Heritage Haveli,26.2924,73.0169,280,tiles,2,15,Rajasthan,Jodhpur,1800,tank,residential,completed,verified,,INS-002,2025-09-30,98000,8000,45000
+SITE-V041,Desert Resort,26.9045,70.9167,600,concrete,2,80,Rajasthan,Jaisalmer,10000,recharge,commercial,completed,verified,,INS-002,2025-08-08,150000,15000,95000
+SITE-V042,Railway Colony D Block,26.9157,75.7873,200,tiles,3,40,Rajasthan,Jaipur,2400,tank,residential,completed,verified,,INS-002,2025-10-15,88000,6000,38000
+SITE-V043,Bio Park Lab Building,15.3647,75.1240,350,concrete,2,50,Karnataka,Hubli,3500,tank,commercial,completed,verified,,INS-004,2025-11-18,203000,12000,72000
+SITE-V044,Agriculture College,15.3628,74.8376,700,tiles,3,300,Karnataka,Dharwad,6000,hybrid,government,completed,verified,,INS-004,2025-09-05,406000,25000,135000
+SITE-P045,Textile Mill Unit 2,15.8497,74.4977,2000,metal,1,100,Karnataka,Belgaum,8500,recharge,industrial,in_progress,pending,,,2026-01-22,1160000,60000,325000
+SITE-V046,Hospital Main Wing,15.8621,74.5080,600,concrete,4,200,Karnataka,Belgaum,9500,hybrid,government,completed,verified,,INS-004,2025-08-02,348000,22000,125000
+SITE-V047,Temple Trust Building,12.3052,76.6552,400,tiles,1,100,Karnataka,Mysore,2500,tank,residential,completed,verified,,INS-004,2025-10-28,264000,15000,82000
+SITE-V048,Film Studio Lot 3,17.2403,78.4294,5000,metal,1,150,Telangana,Hyderabad,22000,recharge,commercial,completed,verified,,INS-005,2025-07-12,2900000,150000,685000
+SITE-V049,Pharma Company Unit A,17.4875,78.3871,1500,metal,2,80,Telangana,Hyderabad,12000,hybrid,industrial,completed,verified,,INS-005,2025-09-20,870000,50000,285000
+SITE-V050,Marina Beach Tower,13.0500,80.2824,600,concrete,10,180,Tamil Nadu,Chennai,14000,tank,commercial,completed,verified,,INS-006,2025-08-30,342000,22000,118000

@@ -35,101 +35,69 @@ const PaymentMilestones = ({ jobId = 116, totalAmount = 115000 }: PaymentMilesto
 
     const createPayment = async () => {
         setLoading(true);
-        try {
-            const res = await fetch('https://rainforge-api.onrender.com/api/v1/payments', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ job_id: jobId, total_amount: totalAmount })
-            });
-            const data = await res.json();
-
-            // Capture to escrow
-            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${data.payment_id}/escrow`, { method: 'POST' });
-
-            fetchPayment(data.payment_id);
-        } catch (e) {
-            // Mock payment
-            setPayment({
-                payment_id: 'PAY-DEMO01',
-                job_id: jobId,
-                total_amount: totalAmount,
-                escrow_amount: totalAmount,
-                released_amount: 0,
-                status: 'escrow',
-                milestones: [
-                    { id: 'MS-001', name: 'Design Approval', amount: 23000, sequence: 1, status: 'pending' },
-                    { id: 'MS-002', name: 'Installation Complete', amount: 46000, sequence: 2, status: 'pending' },
-                    { id: 'MS-003', name: 'Verification Passed', amount: 34500, sequence: 3, status: 'pending' },
-                    { id: 'MS-004', name: 'Post-Performance Check', amount: 11500, sequence: 4, status: 'pending' }
-                ]
-            });
-        }
+        await new Promise(resolve => setTimeout(resolve, 500));
+        // Mock payment
+        setPayment({
+            payment_id: 'PAY-DEMO01',
+            job_id: jobId,
+            total_amount: totalAmount,
+            escrow_amount: totalAmount,
+            released_amount: 0,
+            status: 'escrow',
+            milestones: [
+                { id: 'MS-001', name: 'Design Approval', amount: 23000, sequence: 1, status: 'pending' },
+                { id: 'MS-002', name: 'Installation Complete', amount: 46000, sequence: 2, status: 'pending' },
+                { id: 'MS-003', name: 'Verification Passed', amount: 34500, sequence: 3, status: 'pending' },
+                { id: 'MS-004', name: 'Post-Performance Check', amount: 11500, sequence: 4, status: 'pending' }
+            ]
+        });
         setLoading(false);
     };
 
     const fetchPayment = async (paymentId: string) => {
-        try {
-            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${paymentId}`);
-            setPayment(await res.json());
-        } catch (e) { }
+        // Already have payment data
     };
 
     const completeMilestone = async (milestoneId: string) => {
         if (!payment) return;
         setLoading(true);
-
-        try {
-            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/complete`, { method: 'POST' });
-            await fetchPayment(payment.payment_id);
-        } catch (e) {
-            // Mock update
-            setPayment({
-                ...payment,
-                milestones: payment.milestones.map(m =>
-                    m.id === milestoneId ? { ...m, status: 'completed' } : m
-                )
-            });
-        }
+        await new Promise(resolve => setTimeout(resolve, 300));
+        setPayment({
+            ...payment,
+            milestones: payment.milestones.map(m =>
+                m.id === milestoneId ? { ...m, status: 'completed' } : m
+            )
+        });
         setLoading(false);
     };
 
     const verifyMilestone = async (milestoneId: string) => {
         if (!payment) return;
         setLoading(true);
-
-        try {
-            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/verify`, { method: 'POST' });
-            await fetchPayment(payment.payment_id);
-        } catch (e) {
-            setPayment({
-                ...payment,
-                milestones: payment.milestones.map(m =>
-                    m.id === milestoneId ? { ...m, status: 'verified' } : m
-                )
-            });
-        }
+        await new Promise(resolve => setTimeout(resolve, 300));
+        setPayment({
+            ...payment,
+            milestones: payment.milestones.map(m =>
+                m.id === milestoneId ? { ...m, status: 'verified' } : m
+            )
+        });
         setLoading(false);
     };
 
     const releaseMilestone = async (milestoneId: string) => {
         if (!payment) return;
         setLoading(true);
-
-        try {
-            await fetch(`https://rainforge-api.onrender.com/api/v1/payments/${payment.payment_id}/milestones/${milestoneId}/release`, { method: 'POST' });
-            await fetchPayment(payment.payment_id);
-        } catch (e) {
-            const milestone = payment.milestones.find(m => m.id === milestoneId);
-            if (milestone) {
-                setPayment({
-                    ...payment,
-                    released_amount: payment.released_amount + milestone.amount,
-                    escrow_amount: payment.escrow_amount - milestone.amount,
-                    milestones: payment.milestones.map(m =>
-                        m.id === milestoneId ? { ...m, status: 'released' } : m
-                    )
-                });
-            }
+        await new Promise(resolve => setTimeout(resolve, 400));
+        const milestone = payment.milestones.find(m => m.id === milestoneId);
+        if (milestone) {
+            setPayment({
+                ...payment,
+                released_amount: payment.released_amount + milestone.amount,
+                escrow_amount: payment.escrow_amount - milestone.amount,
+                milestones: payment.milestones.map(m =>
+                    m.id === milestoneId ? { ...m, status: 'released' } : m
+                )
+            });
         }
         setLoading(false);
     };

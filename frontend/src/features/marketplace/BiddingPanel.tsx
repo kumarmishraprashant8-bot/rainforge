@@ -38,57 +38,32 @@ const BiddingPanel = ({ jobId = 116, estimatedCost = 115000, onBidAwarded }: Bid
 
     const openBidding = async () => {
         setLoading(true);
-        try {
-            await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/jobs/${jobId}/open-bid`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ deadline_hours: 72 })
-            });
-            setBidOpen(true);
-        } catch (e) {
-            setBidOpen(true);
-        }
+        await new Promise(resolve => setTimeout(resolve, 300));
+        setBidOpen(true);
         setLoading(false);
     };
 
     const submitBid = async () => {
         setLoading(true);
-        try {
-            const res = await fetch('https://rainforge-api.onrender.com/api/v1/marketplace/bids', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ job_id: jobId, ...newBid })
-            });
-            await fetchBids();
-        } catch (e) {
-            // Mock add
-            const mockBid: Bid = {
-                bid_id: `BID-${Math.random().toString(36).substr(2, 8)}`,
-                ...newBid,
-                score: 75 + Math.random() * 20,
-                rank: bids.length + 1
-            };
-            setBids([...bids, mockBid].sort((a, b) => b.score - a.score).map((b, i) => ({ ...b, rank: i + 1 })));
-        }
+        await new Promise(resolve => setTimeout(resolve, 400));
+        // Mock add bid
+        const mockBid: Bid = {
+            bid_id: `BID-${Math.random().toString(36).substr(2, 8)}`,
+            ...newBid,
+            score: 75 + Math.random() * 20,
+            rank: bids.length + 1
+        };
+        setBids([...bids, mockBid].sort((a, b) => b.score - a.score).map((b, i) => ({ ...b, rank: i + 1 })));
         setLoading(false);
     };
 
     const fetchBids = async () => {
-        try {
-            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/bids?job_id=${jobId}`);
-            const data = await res.json();
-            setBids(data.bids || []);
-        } catch (e) {
-            // Keep existing
-        }
+        // Already have bids, do nothing
     };
 
     const awardBid = async (bidId: string) => {
         setLoading(true);
-        try {
-            await fetch(`https://rainforge-api.onrender.com/api/v1/marketplace/bids/${bidId}/award`, { method: 'POST' });
-        } catch (e) { }
-
+        await new Promise(resolve => setTimeout(resolve, 500));
         const awarded = bids.find(b => b.bid_id === bidId);
         if (awarded) {
             setAwardedBid(awarded);

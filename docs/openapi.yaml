@@ -1,0 +1,768 @@
+openapi: 3.0.3
+info:
+  title: RainForge API
+  description: |
+    End-to-end Rainwater Harvesting Assessment and Management Platform.
+    
+    ## Features
+    - Instant assessment with PDF generation
+    - Batch processing for government scale
+    - Smart installer allocation (RPI-weighted)
+    - Reverse auction with escrow
+    - Fraud-resilient verification
+    - IoT telemetry and monitoring
+    - Public transparency dashboard
+  version: 1.0.0
+  contact:
+    name: RainForge Team
+    email: support@rainforge.in
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development
+  - url: https://api.rainforge.in/v1
+    description: Production
+
+tags:
+  - name: Assessment
+    description: Single-site and batch assessment
+  - name: Allocation
+    description: Installer allocation and marketplace
+  - name: Auction
+    description: Reverse auction and bidding
+  - name: Verification
+    description: Geo-verified verification with fraud detection
+  - name: Telemetry
+    description: IoT sensor data ingestion
+  - name: Monitoring
+    description: Real-time project monitoring
+  - name: Public
+    description: Public transparency dashboard
+
+paths:
+  /assess:
+    post:
+      tags: [Assessment]
+      summary: Run single-site assessment
+      description: |
+        Generate instant RWH assessment for a single site.
+        Returns assessment JSON and PDF download URL.
+      operationId: runAssessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentRequest'
+      responses:
+        '200':
+          description: Assessment completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation error
+
+  /assess/{assessment_id}/pdf:
+    get:
+      tags: [Assessment]
+      summary: Download assessment PDF
+      operationId: getAssessmentPdf
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: PDF document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  /bulk/upload:
+    post:
+      tags: [Assessment]
+      summary: Upload CSV for batch assessment
+      operationId: uploadBulkCsv
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                  total_rows:
+                    type: integer
+                  status:
+                    type: string
+
+  /bulk/job/{job_id}:
+    get:
+      tags: [Assessment]
+      summary: Get batch job progress
+      operationId: getBulkJobProgress
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkJobStatus'
+
+  /bulk/job/{job_id}/download:
+    get:
+      tags: [Assessment]
+      summary: Download batch results ZIP
+      operationId: downloadBulkResults
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ZIP archive with PDFs and JSON
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+
+  /allocate:
+    post:
+      tags: [Allocation]
+      summary: Run smart allocation
+      operationId: runAllocation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllocationRequest'
+      responses:
+        '200':
+          description: Allocation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllocationResponse'
+
+  /auction/create:
+    post:
+      tags: [Auction]
+      summary: Create auction for job
+      operationId: createAuction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job_id:
+                  type: integer
+                deadline_hours:
+                  type: integer
+                  default: 72
+      responses:
+        '200':
+          description: Auction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionResponse'
+
+  /auction/{auction_id}/bid:
+    post:
+      tags: [Auction]
+      summary: Submit bid
+      operationId: submitBid
+      parameters:
+        - name: auction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BidRequest'
+      responses:
+        '200':
+          description: Bid submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BidResponse'
+
+  /auction/{auction_id}/history:
+    get:
+      tags: [Auction]
+      summary: Get auction history
+      operationId: getAuctionHistory
+      parameters:
+        - name: auction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Auction history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auction_id:
+                    type: string
+                  status:
+                    type: string
+                  bids:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bid'
+
+  /verify:
+    post:
+      tags: [Verification]
+      summary: Submit verification with photos
+      operationId: submitVerification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationRequest'
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResponse'
+
+  /escrow/{job_id}/release:
+    post:
+      tags: [Auction]
+      summary: Release escrow milestone
+      operationId: releaseEscrow
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                milestone_id:
+                  type: string
+      responses:
+        '200':
+          description: Milestone released
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_id:
+                    type: string
+                  milestone_id:
+                    type: string
+                  amount_released:
+                    type: number
+                  status:
+                    type: string
+
+  /telemetry/ingest:
+    post:
+      tags: [Telemetry]
+      summary: Ingest sensor reading
+      operationId: ingestTelemetry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryReading'
+      responses:
+        '200':
+          description: Reading ingested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  reading_id:
+                    type: string
+
+  /monitor/{project_id}:
+    get:
+      tags: [Monitoring]
+      summary: Get project monitoring dashboard
+      operationId: getProjectMonitoring
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: hours
+          in: query
+          schema:
+            type: integer
+            default: 24
+      responses:
+        '200':
+          description: Monitoring data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitoringDashboard'
+
+  /public/dashboard:
+    get:
+      tags: [Public]
+      summary: Get public transparency dashboard
+      operationId: getPublicDashboard
+      parameters:
+        - name: ward_id
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Public dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicDashboard'
+
+  /public/export:
+    get:
+      tags: [Public]
+      summary: Export data (CSV or GeoJSON)
+      operationId: exportPublicData
+      parameters:
+        - name: format
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [csv, geojson]
+        - name: ward_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exported data
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/geo+json:
+              schema:
+                type: object
+
+components:
+  schemas:
+    AssessmentRequest:
+      type: object
+      properties:
+        address:
+          type: string
+          example: "15 Janpath Road, New Delhi"
+        polygon:
+          type: object
+          description: GeoJSON polygon
+        roof_material:
+          type: string
+          enum: [concrete, metal, tiles, thatched]
+        slope_degrees:
+          type: number
+          minimum: 0
+          maximum: 45
+        floors:
+          type: integer
+          minimum: 1
+        people:
+          type: integer
+          minimum: 1
+        monthly_bill_inr:
+          type: number
+      required:
+        - roof_material
+        - floors
+        - people
+
+    AssessmentResponse:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+          example: "ASM-20260203-001"
+        roof_area_sqm:
+          type: number
+        annual_yield_liters:
+          type: number
+        scenarios:
+          type: object
+          properties:
+            cost_optimized:
+              $ref: '#/components/schemas/Scenario'
+            max_capture:
+              $ref: '#/components/schemas/Scenario'
+            dry_season:
+              $ref: '#/components/schemas/Scenario'
+        monthly_balance:
+          type: array
+          items:
+            type: object
+        reliability_pct:
+          type: number
+        subsidy:
+          type: object
+          properties:
+            pct:
+              type: number
+            amount_inr:
+              type: number
+        net_cost_inr:
+          type: number
+        co2_avoided_kg:
+          type: number
+        payback_years:
+          type: number
+        pdf_url:
+          type: string
+
+    Scenario:
+      type: object
+      properties:
+        tank_liters:
+          type: integer
+        cost_inr:
+          type: number
+
+    BulkJobStatus:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        total_rows:
+          type: integer
+        processed_rows:
+          type: integer
+        progress_pct:
+          type: number
+        download_url:
+          type: string
+
+    AllocationRequest:
+      type: object
+      properties:
+        job_ids:
+          type: array
+          items:
+            type: integer
+        mode:
+          type: string
+          enum: [gov_optimized, equitable, user_choice]
+          default: gov_optimized
+        force_installer_id:
+          type: integer
+
+    AllocationResponse:
+      type: object
+      properties:
+        allocations:
+          type: array
+          items:
+            type: object
+            properties:
+              job_id:
+                type: integer
+              installer_id:
+                type: integer
+              installer_name:
+                type: string
+              score:
+                type: number
+              score_breakdown:
+                type: object
+
+    AuctionResponse:
+      type: object
+      properties:
+        auction_id:
+          type: string
+        job_id:
+          type: integer
+        status:
+          type: string
+        deadline:
+          type: string
+          format: date-time
+
+    BidRequest:
+      type: object
+      properties:
+        installer_id:
+          type: integer
+        price:
+          type: number
+        timeline_days:
+          type: integer
+        warranty_months:
+          type: integer
+        notes:
+          type: string
+      required:
+        - installer_id
+        - price
+        - timeline_days
+
+    BidResponse:
+      type: object
+      properties:
+        bid_id:
+          type: string
+        status:
+          type: string
+        score:
+          type: number
+
+    Bid:
+      type: object
+      properties:
+        bid_id:
+          type: string
+        installer_id:
+          type: integer
+        installer_name:
+          type: string
+        price:
+          type: number
+        timeline_days:
+          type: integer
+        warranty_months:
+          type: integer
+        score:
+          type: number
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    VerificationRequest:
+      type: object
+      properties:
+        project_id:
+          type: integer
+        installer_id:
+          type: integer
+        photos:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              type:
+                type: string
+                enum: [before, during, after, installation_complete]
+        geo_lat:
+          type: number
+        geo_lng:
+          type: number
+      required:
+        - project_id
+        - photos
+        - geo_lat
+        - geo_lng
+
+    VerificationResponse:
+      type: object
+      properties:
+        verification_id:
+          type: string
+        fraud_score:
+          type: number
+        status:
+          type: string
+          enum: [auto_approve, review, flag, reject]
+        flags:
+          type: array
+          items:
+            type: string
+        audit_entries:
+          type: array
+          items:
+            type: object
+            properties:
+              check:
+                type: string
+              result:
+                type: string
+              details:
+                type: object
+
+    TelemetryReading:
+      type: object
+      properties:
+        device_id:
+          type: string
+        project_id:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        readings:
+          type: object
+          properties:
+            tank_level_liters:
+              type: number
+            battery_pct:
+              type: number
+            signal_rssi:
+              type: number
+      required:
+        - device_id
+        - project_id
+        - readings
+
+    MonitoringDashboard:
+      type: object
+      properties:
+        project_id:
+          type: integer
+        current_level:
+          type: object
+          properties:
+            liters:
+              type: number
+            percent:
+              type: number
+            last_updated:
+              type: string
+              format: date-time
+        trend_24h:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: string
+              value:
+                type: number
+        days_until_empty:
+          type: number
+        alerts:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              message:
+                type: string
+              severity:
+                type: string
+        forecast:
+          type: object
+          properties:
+            rainfall_7d_mm:
+              type: number
+            expected_capture_liters:
+              type: number
+            overflow_risk:
+              type: boolean
+
+    PublicDashboard:
+      type: object
+      properties:
+        summary:
+          type: object
+          properties:
+            total_projects:
+              type: integer
+            verified_projects:
+              type: integer
+            total_capture_liters:
+              type: number
+            total_investment_inr:
+              type: number
+            co2_avoided_kg:
+              type: number
+        wards:
+          type: array
+          items:
+            type: object
+            properties:
+              ward_id:
+                type: string
+              ward_name:
+                type: string
+              projects:
+                type: integer
+              capture_liters:
+                type: number
+              investment_inr:
+                type: number
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

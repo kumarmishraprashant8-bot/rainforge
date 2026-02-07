@@ -1,0 +1,16 @@
+site_id,address,lat,lng,roof_area_sqm,roof_material,status,verified_at,installer_id,fraud_score
+SITE-001,15 Janpath Road New Delhi,28.6139,77.2090,150,concrete,verified,2026-01-15,1,0.0
+SITE-002,Municipal School Sector 5 Gurugram,28.4595,77.0266,500,metal,verified,2026-01-20,2,0.05
+SITE-003,Community Hall Thane,19.2183,72.9781,300,concrete,verified,2026-01-22,3,0.0
+SITE-004,Government Hospital Koramangala,12.9352,77.6245,800,concrete,verified,2026-01-25,4,0.12
+SITE-005,District Collectorate Hyderabad,17.3850,78.4867,1200,metal,verified,2026-01-28,5,0.0
+SITE-006,Primary School Chennai,13.0827,80.2707,200,tiles,pending,,6,
+SITE-007,Residential Complex Noida,28.5355,77.3910,250,concrete,verified,2026-02-01,1,0.0
+SITE-008,Commercial Building Mumbai,19.0760,72.8777,600,metal,fraud_flagged,,,0.85
+SITE-009,Temple Complex Jaipur,26.9124,75.7873,400,tiles,verified,2026-01-30,5,0.0
+SITE-010,Bus Terminal Ahmedabad,23.0225,72.5714,350,metal,pending,,,
+SITE-011,Public Library Delhi,28.6280,77.2175,180,concrete,verified,2026-01-18,1,0.0
+SITE-012,Sports Complex Pune,18.5204,73.8567,750,metal,verified,2026-01-23,3,0.08
+SITE-013,Shopping Mall Bangalore,12.9716,77.5946,2000,concrete,pending,,4,
+SITE-014,Railway Station Lucknow,26.8467,80.9462,1500,metal,verified,2026-01-27,5,0.0
+SITE-015,Airport Terminal Goa,15.3893,73.8791,3000,metal,verified,2026-01-29,3,0.0

@@ -1,0 +1,11 @@
+state,scheme_name,subsidy_pct,max_subsidy_inr,eligible_building_types,min_roof_sqm,max_roof_sqm,valid_from,valid_until,source_url
+Delhi,Delhi Jal Board RWH Scheme,50,50000,"residential,commercial,government",50,5000,2024-01-01,2025-12-31,https://delhijalboard.nic.in
+Maharashtra,Maharashtra RWH Rebate,35,75000,"residential,commercial",100,10000,2024-04-01,2025-03-31,https://mahawater.gov.in
+Karnataka,Bangaluru Jalasiri,40,40000,"residential",50,2000,2024-01-01,2025-12-31,https://bwssb.gov.in
+Tamil Nadu,TN RWH Mandate,30,35000,"residential,commercial,government",100,5000,2024-01-01,2025-12-31,https://tnpwd.gov.in
+Telangana,HMWSSB Green Building,45,60000,"residential,commercial",75,3000,2024-01-01,2025-12-31,https://hyderabadwater.gov.in
+Rajasthan,Mukhyamantri Jal Swavlamban,60,100000,"residential,government",50,10000,2024-01-01,2025-12-31,https://water.rajasthan.gov.in
+Uttar Pradesh,UP RWH Incentive,25,25000,"residential",100,2000,2024-01-01,2025-12-31,https://upjn.org
+Gujarat,Gujarat RWH Policy,40,50000,"residential,commercial,industrial",100,5000,2024-01-01,2025-12-31,https://gwssb.gujarat.gov.in
+West Bengal,WB Jaldapara Scheme,30,30000,"residential",50,1500,2024-01-01,2025-12-31,https://wbphed.gov.in
+Kerala,Kerala RWH Mission,50,75000,"residential,commercial",50,5000,2024-01-01,2025-12-31,https://kwa.kerala.gov.in

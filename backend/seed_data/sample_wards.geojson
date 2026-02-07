@@ -1,0 +1,215 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-DL-001",
+                "ward_name": "Connaught Place",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "population": 45000,
+                "area_sqkm": 2.8,
+                "total_projects": 15,
+                "verified_projects": 12,
+                "total_capture_liters": 1250000,
+                "total_investment_inr": 650000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.209,
+                            28.62
+                        ],
+                        [
+                            77.225,
+                            28.62
+                        ],
+                        [
+                            77.225,
+                            28.605
+                        ],
+                        [
+                            77.209,
+                            28.605
+                        ],
+                        [
+                            77.209,
+                            28.62
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-DL-002",
+                "ward_name": "Sector 5 Gurugram",
+                "city": "Gurugram",
+                "state": "Haryana",
+                "population": 32000,
+                "area_sqkm": 4.2,
+                "total_projects": 8,
+                "verified_projects": 6,
+                "total_capture_liters": 820000,
+                "total_investment_inr": 420000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.02,
+                            28.465
+                        ],
+                        [
+                            77.04,
+                            28.465
+                        ],
+                        [
+                            77.04,
+                            28.45
+                        ],
+                        [
+                            77.02,
+                            28.45
+                        ],
+                        [
+                            77.02,
+                            28.465
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-KA-001",
+                "ward_name": "Koramangala",
+                "city": "Bangalore",
+                "state": "Karnataka",
+                "population": 68000,
+                "area_sqkm": 5.1,
+                "total_projects": 22,
+                "verified_projects": 18,
+                "total_capture_liters": 2100000,
+                "total_investment_inr": 980000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.615,
+                            12.935
+                        ],
+                        [
+                            77.64,
+                            12.935
+                        ],
+                        [
+                            77.64,
+                            12.91
+                        ],
+                        [
+                            77.615,
+                            12.91
+                        ],
+                        [
+                            77.615,
+                            12.935
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-MH-001",
+                "ward_name": "Bandra West",
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "population": 78000,
+                "area_sqkm": 3.5,
+                "total_projects": 35,
+                "verified_projects": 28,
+                "total_capture_liters": 4200000,
+                "total_investment_inr": 1850000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            72.825,
+                            19.065
+                        ],
+                        [
+                            72.845,
+                            19.065
+                        ],
+                        [
+                            72.845,
+                            19.045
+                        ],
+                        [
+                            72.825,
+                            19.045
+                        ],
+                        [
+                            72.825,
+                            19.065
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-TS-001",
+                "ward_name": "Jubilee Hills",
+                "city": "Hyderabad",
+                "state": "Telangana",
+                "population": 52000,
+                "area_sqkm": 6.8,
+                "total_projects": 18,
+                "verified_projects": 15,
+                "total_capture_liters": 1680000,
+                "total_investment_inr": 920000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            78.39,
+                            17.44
+                        ],
+                        [
+                            78.42,
+                            17.44
+                        ],
+                        [
+                            78.42,
+                            17.41
+                        ],
+                        [
+                            78.39,
+                            17.41
+                        ],
+                        [
+                            78.39,
+                            17.44
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}

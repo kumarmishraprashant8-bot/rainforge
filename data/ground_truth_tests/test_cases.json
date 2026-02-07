@@ -1,0 +1,536 @@
+[
+    {
+        "test_id": "GT-001",
+        "location": {
+            "city": "New Delhi",
+            "state": "Delhi",
+            "lat": 28.6139,
+            "lng": 77.2090
+        },
+        "input": {
+            "roof_area_sqm": 100,
+            "roof_material": "concrete",
+            "floors": 2,
+            "people": 5,
+            "monthly_bill_inr": 800
+        },
+        "rainfall": {
+            "annual_mm": 700,
+            "monthly_mm": [
+                15,
+                18,
+                12,
+                8,
+                25,
+                65,
+                180,
+                175,
+                100,
+                25,
+                5,
+                7
+            ],
+            "source": "IMD_Delhi_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.85,
+            "annual_yield_liters": 59500,
+            "monthly_yields_liters": [
+                1275,
+                1530,
+                1020,
+                680,
+                2125,
+                5525,
+                15300,
+                14875,
+                8500,
+                2125,
+                425,
+                595
+            ],
+            "recommended_tank_liters": 5000,
+            "reliability_pct": 72.5,
+            "cost_estimate_inr": {
+                "tank": 18000,
+                "installation": 15000,
+                "total": 33000
+            },
+            "subsidy_pct": 50,
+            "net_cost_inr": 16500,
+            "co2_avoided_kg_annual": 15.2,
+            "payback_years": 5.5
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-002",
+        "location": {
+            "city": "Mumbai",
+            "state": "Maharashtra",
+            "lat": 19.0760,
+            "lng": 72.8777
+        },
+        "input": {
+            "roof_area_sqm": 150,
+            "roof_material": "metal",
+            "floors": 3,
+            "people": 8,
+            "monthly_bill_inr": 1200
+        },
+        "rainfall": {
+            "annual_mm": 2200,
+            "monthly_mm": [
+                2,
+                1,
+                0,
+                5,
+                35,
+                650,
+                750,
+                520,
+                300,
+                75,
+                15,
+                5
+            ],
+            "source": "IMD_Mumbai_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.90,
+            "annual_yield_liters": 297000,
+            "recommended_tank_liters": 15000,
+            "reliability_pct": 88.5,
+            "cost_estimate_inr": {
+                "tank": 42000,
+                "installation": 28000,
+                "total": 70000
+            },
+            "subsidy_pct": 35,
+            "net_cost_inr": 45500,
+            "co2_avoided_kg_annual": 75.6,
+            "payback_years": 4.2
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-003",
+        "location": {
+            "city": "Bangalore",
+            "state": "Karnataka",
+            "lat": 12.9716,
+            "lng": 77.5946
+        },
+        "input": {
+            "roof_area_sqm": 200,
+            "roof_material": "tiles",
+            "floors": 2,
+            "people": 6,
+            "monthly_bill_inr": 950
+        },
+        "rainfall": {
+            "annual_mm": 970,
+            "monthly_mm": [
+                5,
+                8,
+                15,
+                55,
+                120,
+                85,
+                95,
+                130,
+                195,
+                180,
+                60,
+                22
+            ],
+            "source": "IMD_Bangalore_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.75,
+            "annual_yield_liters": 145500,
+            "recommended_tank_liters": 10000,
+            "reliability_pct": 82.0,
+            "cost_estimate_inr": {
+                "tank": 32000,
+                "installation": 22000,
+                "total": 54000
+            },
+            "subsidy_pct": 40,
+            "net_cost_inr": 32400,
+            "co2_avoided_kg_annual": 37.1,
+            "payback_years": 5.8
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-004",
+        "location": {
+            "city": "Chennai",
+            "state": "Tamil Nadu",
+            "lat": 13.0827,
+            "lng": 80.2707
+        },
+        "input": {
+            "roof_area_sqm": 250,
+            "roof_material": "concrete",
+            "floors": 4,
+            "people": 12,
+            "monthly_bill_inr": 1500
+        },
+        "rainfall": {
+            "annual_mm": 1400,
+            "monthly_mm": [
+                25,
+                10,
+                8,
+                15,
+                55,
+                50,
+                85,
+                120,
+                125,
+                280,
+                380,
+                250
+            ],
+            "source": "IMD_Chennai_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.85,
+            "annual_yield_liters": 297500,
+            "recommended_tank_liters": 15000,
+            "reliability_pct": 85.0,
+            "cost_estimate_inr": {
+                "tank": 42000,
+                "installation": 32000,
+                "total": 74000
+            },
+            "subsidy_pct": 30,
+            "net_cost_inr": 51800,
+            "co2_avoided_kg_annual": 75.8,
+            "payback_years": 4.8
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-005",
+        "location": {
+            "city": "Jaipur",
+            "state": "Rajasthan",
+            "lat": 26.9157,
+            "lng": 75.7873
+        },
+        "input": {
+            "roof_area_sqm": 180,
+            "roof_material": "tiles",
+            "floors": 2,
+            "people": 6,
+            "monthly_bill_inr": 700
+        },
+        "rainfall": {
+            "annual_mm": 650,
+            "monthly_mm": [
+                5,
+                5,
+                3,
+                2,
+                8,
+                55,
+                195,
+                180,
+                85,
+                12,
+                2,
+                3
+            ],
+            "source": "IMD_Jaipur_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.75,
+            "annual_yield_liters": 87750,
+            "recommended_tank_liters": 8000,
+            "reliability_pct": 68.0,
+            "cost_estimate_inr": {
+                "tank": 26000,
+                "installation": 18000,
+                "total": 44000
+            },
+            "subsidy_pct": 60,
+            "net_cost_inr": 17600,
+            "co2_avoided_kg_annual": 22.4,
+            "payback_years": 6.2
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-006",
+        "location": {
+            "city": "Hyderabad",
+            "state": "Telangana",
+            "lat": 17.3850,
+            "lng": 78.4867
+        },
+        "input": {
+            "roof_area_sqm": 300,
+            "roof_material": "metal",
+            "floors": 3,
+            "people": 10,
+            "monthly_bill_inr": 1100
+        },
+        "rainfall": {
+            "annual_mm": 800,
+            "monthly_mm": [
+                5,
+                12,
+                15,
+                25,
+                40,
+                105,
+                165,
+                155,
+                145,
+                95,
+                25,
+                8
+            ],
+            "source": "IMD_Hyderabad_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.90,
+            "annual_yield_liters": 216000,
+            "recommended_tank_liters": 12000,
+            "reliability_pct": 78.5,
+            "cost_estimate_inr": {
+                "tank": 38000,
+                "installation": 25000,
+                "total": 63000
+            },
+            "subsidy_pct": 45,
+            "net_cost_inr": 34650,
+            "co2_avoided_kg_annual": 55.1,
+            "payback_years": 5.2
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-007",
+        "location": {
+            "city": "Kolkata",
+            "state": "West Bengal",
+            "lat": 22.5726,
+            "lng": 88.3639
+        },
+        "input": {
+            "roof_area_sqm": 120,
+            "roof_material": "concrete",
+            "floors": 3,
+            "people": 8,
+            "monthly_bill_inr": 900
+        },
+        "rainfall": {
+            "annual_mm": 1600,
+            "monthly_mm": [
+                12,
+                25,
+                35,
+                55,
+                145,
+                280,
+                340,
+                315,
+                265,
+                140,
+                25,
+                8
+            ],
+            "source": "IMD_Kolkata_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.85,
+            "annual_yield_liters": 163200,
+            "recommended_tank_liters": 10000,
+            "reliability_pct": 85.5,
+            "cost_estimate_inr": {
+                "tank": 32000,
+                "installation": 20000,
+                "total": 52000
+            },
+            "subsidy_pct": 30,
+            "net_cost_inr": 36400,
+            "co2_avoided_kg_annual": 41.6,
+            "payback_years": 5.6
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-008",
+        "location": {
+            "city": "Pune",
+            "state": "Maharashtra",
+            "lat": 18.5204,
+            "lng": 73.8567
+        },
+        "input": {
+            "roof_area_sqm": 400,
+            "roof_material": "concrete",
+            "floors": 2,
+            "people": 15,
+            "monthly_bill_inr": 1800
+        },
+        "rainfall": {
+            "annual_mm": 1100,
+            "monthly_mm": [
+                2,
+                2,
+                5,
+                20,
+                55,
+                145,
+                280,
+                225,
+                165,
+                95,
+                45,
+                15
+            ],
+            "source": "IMD_Pune_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.85,
+            "annual_yield_liters": 374000,
+            "recommended_tank_liters": 20000,
+            "reliability_pct": 82.0,
+            "cost_estimate_inr": {
+                "tank": 55000,
+                "installation": 35000,
+                "total": 90000
+            },
+            "subsidy_pct": 35,
+            "net_cost_inr": 58500,
+            "co2_avoided_kg_annual": 95.4,
+            "payback_years": 4.5
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-009",
+        "location": {
+            "city": "Jodhpur",
+            "state": "Rajasthan",
+            "lat": 26.2389,
+            "lng": 73.0243
+        },
+        "input": {
+            "roof_area_sqm": 500,
+            "roof_material": "metal",
+            "floors": 1,
+            "people": 20,
+            "monthly_bill_inr": 2500
+        },
+        "rainfall": {
+            "annual_mm": 350,
+            "monthly_mm": [
+                2,
+                2,
+                1,
+                1,
+                5,
+                35,
+                125,
+                95,
+                45,
+                15,
+                3,
+                2
+            ],
+            "source": "IMD_Jodhpur_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.90,
+            "annual_yield_liters": 157500,
+            "recommended_tank_liters": 15000,
+            "reliability_pct": 55.0,
+            "cost_estimate_inr": {
+                "tank": 42000,
+                "installation": 30000,
+                "total": 72000
+            },
+            "subsidy_pct": 60,
+            "net_cost_inr": 28800,
+            "co2_avoided_kg_annual": 40.2,
+            "payback_years": 7.8
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    },
+    {
+        "test_id": "GT-010",
+        "location": {
+            "city": "Cherrapunji",
+            "state": "Meghalaya",
+            "lat": 25.2700,
+            "lng": 91.7300
+        },
+        "input": {
+            "roof_area_sqm": 100,
+            "roof_material": "tiles",
+            "floors": 1,
+            "people": 4,
+            "monthly_bill_inr": 500
+        },
+        "rainfall": {
+            "annual_mm": 11777,
+            "monthly_mm": [
+                55,
+                125,
+                480,
+                850,
+                1350,
+                2550,
+                2750,
+                1650,
+                1180,
+                520,
+                85,
+                45
+            ],
+            "source": "IMD_Cherrapunji_30yr_avg"
+        },
+        "expected_output": {
+            "runoff_coefficient": 0.75,
+            "annual_yield_liters": 883275,
+            "recommended_tank_liters": 50000,
+            "reliability_pct": 98.5,
+            "cost_estimate_inr": {
+                "tank": 125000,
+                "installation": 65000,
+                "total": 190000
+            },
+            "subsidy_pct": 25,
+            "net_cost_inr": 142500,
+            "co2_avoided_kg_annual": 225.2,
+            "payback_years": 3.2
+        },
+        "tolerance_pct": 10,
+        "engineer_validated": true,
+        "validation_date": "2026-01-15"
+    }
+]

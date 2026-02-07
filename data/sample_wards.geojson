@@ -1,0 +1,138 @@
+{
+    "type": "FeatureCollection",
+    "name": "sample_wards",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-001",
+                "ward_name": "Connaught Place",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "population": 45000,
+                "area_sqkm": 2.8,
+                "total_rwh_projects": 156,
+                "verified_projects": 142,
+                "pending_projects": 10,
+                "fraud_cases": 4,
+                "total_capture_liters_annual": 28500000,
+                "total_investment_inr": 4250000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.2090,
+                            28.6200
+                        ],
+                        [
+                            77.2250,
+                            28.6200
+                        ],
+                        [
+                            77.2250,
+                            28.6050
+                        ],
+                        [
+                            77.2090,
+                            28.6050
+                        ],
+                        [
+                            77.2090,
+                            28.6200
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-002",
+                "ward_name": "Sector 5 Gurugram",
+                "city": "Gurugram",
+                "state": "Delhi",
+                "population": 32000,
+                "area_sqkm": 4.2,
+                "total_rwh_projects": 89,
+                "verified_projects": 78,
+                "pending_projects": 8,
+                "fraud_cases": 3,
+                "total_capture_liters_annual": 15200000,
+                "total_investment_inr": 2680000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.0200,
+                            28.4650
+                        ],
+                        [
+                            77.0400,
+                            28.4650
+                        ],
+                        [
+                            77.0400,
+                            28.4500
+                        ],
+                        [
+                            77.0200,
+                            28.4500
+                        ],
+                        [
+                            77.0200,
+                            28.4650
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ward_id": "WARD-003",
+                "ward_name": "Koramangala",
+                "city": "Bangalore",
+                "state": "Karnataka",
+                "population": 68000,
+                "area_sqkm": 5.1,
+                "total_rwh_projects": 234,
+                "verified_projects": 210,
+                "pending_projects": 18,
+                "fraud_cases": 6,
+                "total_capture_liters_annual": 42800000,
+                "total_investment_inr": 7150000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.6150,
+                            12.9350
+                        ],
+                        [
+                            77.6400,
+                            12.9350
+                        ],
+                        [
+                            77.6400,
+                            12.9100
+                        ],
+                        [
+                            77.6150,
+                            12.9100
+                        ],
+                        [
+                            77.6150,
+                            12.9350
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}

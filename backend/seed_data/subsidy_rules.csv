@@ -1,0 +1,11 @@
+state_code,state_name,subsidy_pct,max_subsidy_inr,eligible_types,scheme_name,source_url
+DL,Delhi,50,50000,"residential,commercial,government",Delhi Jal Board RWH Scheme,https://delhijalboard.nic.in
+MH,Maharashtra,35,75000,"residential,commercial",Maharashtra RWH Rebate,https://mahawater.gov.in
+KA,Karnataka,40,40000,residential,Bangaluru Jalasiri,https://bwssb.gov.in
+TN,Tamil Nadu,30,35000,"residential,commercial,government",TN RWH Mandate,https://tnpwd.gov.in
+TS,Telangana,45,60000,"residential,commercial",HMWSSB Green Building,https://hyderabadwater.gov.in
+RJ,Rajasthan,60,100000,"residential,government",Mukhyamantri Jal Swavlamban,https://water.rajasthan.gov.in
+GA,Goa,50,50000,"residential,commercial",Goa RWH Incentive,https://goawater.gov.in
+KL,Kerala,50,75000,"residential,commercial",Kerala RWH Mission,https://kwa.kerala.gov.in
+GJ,Gujarat,40,50000,"residential,commercial,industrial",Gujarat RWH Policy,https://gwssb.gujarat.gov.in
+UP,Uttar Pradesh,25,25000,residential,UP RWH Incentive,https://upjn.org

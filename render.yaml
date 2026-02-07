@@ -1,0 +1,42 @@
+services:
+  # Backend API
+  - type: web
+    name: rainforge-backend
+    env: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    plan: free # Change to 'starter' or higher for production
+    region: singapore # Closest to India for lower latency
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rainforge-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: rainforge-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://rainforge-frontend.vercel.app,https://rainforge.gov.in
+    autoDeploy: false
+
+databases:
+  # Postgres Database
+  - name: rainforge-db
+    databaseName: rainforge
+    user: rainforge
+    plan: free # Change to 'starter' or higher for production
+    region: singapore
+
+# Optional: Redis (Render charges for Redis, unlike free web/db tiers in some plans)
+# Remove if you want to save costs and don't strictly need Redis for the demo
+# services:
+#   - type: redis
+#     name: rainforge-redis
+#     plan: free # If available
+#     region: singapore

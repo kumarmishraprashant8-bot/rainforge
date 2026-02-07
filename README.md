@@ -1,5 +1,78 @@
 # RainForge - Government Marketplace Edition v3.0
 
+<div align="center">
+
+[![CI](https://github.com/YOUR_USERNAME/rainforge/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/rainforge/actions)
+[![🏆 Jal Shakti Hackathon 2026](https://img.shields.io/badge/🏆_Jal_Shakti_Hackathon_2026-SHORTLISTED-gold?style=for-the-badge&labelColor=1e3a8a)](https://jalshakti-ddws.gov.in/)
+[![Made with FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square)](https://fastapi.tiangolo.com/)
+[![Made with React](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square)](https://react.dev/)
+[![License](https://img.shields.io/badge/License-Gov_Open_Source-blue?style=flat-square)](LICENSE)
+
+**AI-powered platform for government-grade rainwater harvesting planning, procurement, execution, verification, and accountability.**
+
+*Made by **Prashant Mishra** & **Ishita Parmar***
+
+</div>
+
+---
+
+## ⚡ Quick Start for Judges (2 minutes)
+
+```bash
+# 1. Start everything with Docker
+docker-compose up --build
+
+# 2. Open in browser
+# Frontend: http://localhost:5173
+# API Docs: http://localhost:8000/docs  
+```
+
+### Demo Flow (follow in order):
+1. **Landing Page** → See the hackathon badge and platform overview
+2. **`/public`** → Public transparency dashboard with city stats
+3. **`/marketplace`** → Smart allocation + competitive bidding + escrow
+4. **`/intake`** → Start new RWH assessment
+5. **`/verification`** → Photo verification with geo-tagging
+
+> 💡 **Tip:** All features work offline with mock data for demo purposes!
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend[🎨 Frontend - React 19]
+        LP[Landing Page]
+        MP[Marketplace]
+        PD[Public Dashboard]
+        VF[Verification]
+    end
+    
+    subgraph Backend[⚙️ Backend - FastAPI]
+        API[REST API]
+        AUTH[JWT Auth]
+        ALLOC[Allocation Engine]
+        FRAUD[Fraud Detector]
+    end
+    
+    subgraph Data[💾 Data Layer]
+        PG[(PostgreSQL)]
+        RD[(Redis)]
+        TS[(TimescaleDB)]
+    end
+    
+    Frontend --> |HTTPS| API
+    API --> AUTH
+    API --> ALLOC
+    API --> FRAUD
+    Backend --> PG
+    Backend --> RD
+    Backend --> TS
+```
+
+---
+
 ## 🌧️ From Assessment to Execution at National Scale
 
 AI-powered platform for government-grade rainwater harvesting **planning, procurement, execution, verification, and accountability**. Jal Shakti Abhiyan aligned.

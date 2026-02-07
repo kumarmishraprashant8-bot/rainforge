@@ -1,0 +1,51 @@
+site_id,address,roof_area_sqm,roof_material,lat,lng,owner_id,floors,people
+SITE001,Municipal School Sector 5 Rohini,250,concrete,28.7041,77.1025,OWN001,2,150
+SITE002,Community Health Center Dwarka,180,tiles,28.5823,77.0500,OWN002,1,50
+SITE003,District Court Complex Saket,450,concrete,28.5244,77.2163,OWN003,3,200
+SITE004,Police Station Vasant Vihar,120,metal,28.5474,77.1564,OWN004,1,25
+SITE005,Primary School MCD Karol Bagh,200,concrete,28.6480,77.1909,OWN005,2,100
+SITE006,Public Library Lajpat Nagar,150,tiles,28.5700,77.2410,OWN006,2,40
+SITE007,PHC Hauz Khas,160,concrete,28.5494,77.2001,OWN007,1,60
+SITE008,Ward Office Mayur Vihar,140,concrete,28.5975,77.2975,OWN008,2,30
+SITE009,Community Hall Janakpuri,320,concrete,28.6200,77.0833,OWN009,1,80
+SITE010,Anganwadi Centre Pitampura,80,tiles,28.6969,77.1389,OWN010,1,35
+SITE011,Government Senior Secondary School Ashok Vihar,380,concrete,28.6917,77.1750,OWN011,3,250
+SITE012,Municipal Office Narela,200,metal,28.8521,77.0929,OWN012,2,45
+SITE013,District Hospital Burari,520,concrete,28.7533,77.2011,OWN013,4,300
+SITE014,Sports Complex Shahdara,280,metal,28.6750,77.2867,OWN014,1,60
+SITE015,Water Treatment Plant Okhla,350,concrete,28.5325,77.2683,OWN015,2,20
+SITE016,Fire Station Connaught Place,180,concrete,28.6315,77.2167,OWN016,2,35
+SITE017,DMRC Depot Shastri Park,600,metal,28.6700,77.2500,OWN017,1,50
+SITE018,Municipal Garden Complex Nehru Place,150,tiles,28.5500,77.2500,OWN018,1,15
+SITE019,Civic Centre ITO,420,concrete,28.6289,77.2415,OWN019,4,180
+SITE020,Govt Girls School Tilak Nagar,220,concrete,28.6452,77.0947,OWN020,2,180
+SITE021,Primary Health Centre Mundka,130,tiles,28.6833,77.0333,OWN021,1,40
+SITE022,Forest Office Ridge,190,tiles,28.6560,77.1810,OWN022,2,25
+SITE023,Transport Depot Rajghat,480,metal,28.6400,77.2475,OWN023,1,30
+SITE024,Kendriya Vidyalaya Vikaspuri,340,concrete,28.6350,77.0667,OWN024,3,400
+SITE025,PWD Office Palam,200,concrete,28.5833,77.0833,OWN025,2,50
+SITE026,Zoo Maintenance Block,160,tiles,28.5988,77.2336,OWN026,1,20
+SITE027,Metro Station Kashmere Gate,380,metal,28.6667,77.2283,OWN027,2,40
+SITE028,DTC Bus Depot Rajouri Garden,520,metal,28.6411,77.1236,OWN028,1,60
+SITE029,Govt Hospital GTB Nagar,450,concrete,28.6945,77.2095,OWN029,5,350
+SITE030,Community Kitchen Anna Nagar,100,tiles,28.5600,77.1200,OWN030,1,30
+SITE031,MCD Headquarters,600,concrete,28.6350,77.2200,OWN031,6,400
+SITE032,Jal Board Office Wazirabad,280,concrete,28.7200,77.2200,OWN032,3,80
+SITE033,Power Substation Mehrauli,150,metal,28.5231,77.1839,OWN033,1,10
+SITE034,Ration Depot Chandni Chowk,180,concrete,28.6506,77.2295,OWN034,2,20
+SITE035,Election Office Tis Hazari,220,concrete,28.6650,77.2200,OWN035,3,60
+SITE036,Agriculture Office Model Town,170,tiles,28.7167,77.1900,OWN036,2,35
+SITE037,Handicraft Emporium CP,140,concrete,28.6280,77.2180,OWN037,3,25
+SITE038,Trade Fair Ground Pragati Maidan,800,metal,28.6200,77.2500,OWN038,1,50
+SITE039,Delhi Secretariat,700,concrete,28.6150,77.2350,OWN039,8,600
+SITE040,Old Pension Office Civil Lines,190,tiles,28.6800,77.2233,OWN040,2,45
+SITE041,Municipal Creche Sarojini Nagar,90,tiles,28.5775,77.1950,OWN041,1,40
+SITE042,Traffic Control Room Rajpur Road,160,concrete,28.7000,77.2100,OWN042,2,30
+SITE043,Community College Kingsway Camp,340,concrete,28.6880,77.2100,OWN043,3,200
+SITE044,BDO Office Alipur,200,concrete,28.7967,77.1367,OWN044,2,40
+SITE045,Veterinary Hospital Wazirpur,180,tiles,28.6967,77.1633,OWN045,1,30
+SITE046,Slum Rehabilitation Centre,120,metal,28.6550,77.0650,OWN046,1,100
+SITE047,Night Shelter Complex Nizamuddin,140,concrete,28.5894,77.2444,OWN047,1,50
+SITE048,Old Age Home Kalkaji,200,tiles,28.5452,77.2587,OWN048,2,60
+SITE049,Dialysis Centre LNJP,180,concrete,28.6367,77.2367,OWN049,1,25
+SITE050,Blood Bank Red Cross Connaught Place,160,concrete,28.6317,77.2150,OWN050,2,40

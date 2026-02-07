@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rainforge-backend
+  labels:
+    app: rainforge-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rainforge-backend
+  template:
+    metadata:
+      labels:
+        app: rainforge-backend
+    spec:
+      containers:
+      - name: backend
+        image: rainforge/backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: rainforge-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: rainforge-secrets
+              key: redis-url
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rainforge-backend
+spec:
+  selector:
+    app: rainforge-backend
+  ports:
+  - port: 80
+    targetPort: 8000
+  type: ClusterIP

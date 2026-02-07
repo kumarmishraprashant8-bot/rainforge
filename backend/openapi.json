@@ -1,0 +1,894 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "RainForge API",
+        "description": "Complete Rooftop Rainwater Harvesting Platform API\n\n## Features\n- **Assessment**: Instant RWH assessment with 3 scenarios\n- **PDF Generation**: Engineer-signed reports with QR verification\n- **Auction**: Reverse auction for installer bidding\n- **Allocation**: Smart installer allocation (RPI-weighted)\n- **Escrow**: Milestone-based payment release\n- **Verification**: Fraud-resistant geo-verified photo uploads\n- **Monitoring**: Real-time IoT telemetry\n- **Public Dashboard**: Ward-level transparency reporting",
+        "version": "1.0.0",
+        "contact": {
+            "name": "RainForge Team",
+            "email": "support@rainforge.in"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1",
+            "description": "Local development"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Assessment",
+            "description": "RWH assessment endpoints"
+        },
+        {
+            "name": "Auction",
+            "description": "Reverse auction bidding"
+        },
+        {
+            "name": "Allocation",
+            "description": "Smart installer allocation"
+        },
+        {
+            "name": "Escrow",
+            "description": "Milestone-based payments"
+        },
+        {
+            "name": "Verification",
+            "description": "Photo verification with fraud detection"
+        },
+        {
+            "name": "Monitoring",
+            "description": "IoT telemetry data"
+        },
+        {
+            "name": "Installers",
+            "description": "Installer management and RPI"
+        },
+        {
+            "name": "Public",
+            "description": "Public transparency dashboard"
+        },
+        {
+            "name": "System",
+            "description": "Health checks and system info"
+        }
+    ],
+    "paths": {
+        "/assess": {
+            "post": {
+                "tags": [
+                    "Assessment"
+                ],
+                "summary": "Create RWH Assessment",
+                "description": "Create a complete rainwater harvesting assessment with 3 scenarios: cost_optimized, max_capture, and dry_season.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssessmentRequest"
+                            },
+                            "example": {
+                                "site_id": "SITE001",
+                                "address": "Municipal School Sector 5, Goa",
+                                "lat": 15.0,
+                                "lng": 73.0,
+                                "roof_area_sqm": 120,
+                                "roof_material": "concrete",
+                                "demand_l_per_day": 200,
+                                "state": "Goa",
+                                "city": "Panaji"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assessment created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/assess/{assessment_id}": {
+            "get": {
+                "tags": [
+                    "Assessment"
+                ],
+                "summary": "Get Assessment Details",
+                "parameters": [
+                    {
+                        "name": "assessment_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assessment details"
+                    },
+                    "404": {
+                        "description": "Assessment not found"
+                    }
+                }
+            }
+        },
+        "/assess/{assessment_id}/pdf": {
+            "get": {
+                "tags": [
+                    "Assessment"
+                ],
+                "summary": "Download Assessment PDF",
+                "description": "Generate and download PDF with QR verification code and engineer signature block.",
+                "parameters": [
+                    {
+                        "name": "assessment_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PDF file",
+                        "content": {
+                            "application/pdf": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Assessment not found"
+                    }
+                }
+            }
+        },
+        "/auction/create": {
+            "post": {
+                "tags": [
+                    "Auction"
+                ],
+                "summary": "Create Reverse Auction",
+                "description": "Create a 72-hour reverse auction for installer bidding.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuctionCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Auction created"
+                    },
+                    "404": {
+                        "description": "Job not found"
+                    },
+                    "400": {
+                        "description": "Auction already exists"
+                    }
+                }
+            }
+        },
+        "/auction/{auction_id}/bid": {
+            "post": {
+                "tags": [
+                    "Auction"
+                ],
+                "summary": "Submit Bid",
+                "description": "Submit a bid for an open auction. Score is calculated from price, RPI, timeline, and warranty.",
+                "parameters": [
+                    {
+                        "name": "auction_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BidRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bid submitted"
+                    },
+                    "400": {
+                        "description": "Auction closed or installer blacklisted"
+                    },
+                    "404": {
+                        "description": "Auction or installer not found"
+                    }
+                }
+            }
+        },
+        "/auction/{auction_id}/history": {
+            "get": {
+                "tags": [
+                    "Auction"
+                ],
+                "summary": "Get Auction History",
+                "description": "Get all bids for an auction, ranked by composite score.",
+                "parameters": [
+                    {
+                        "name": "auction_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Auction details with bids"
+                    },
+                    "404": {
+                        "description": "Auction not found"
+                    }
+                }
+            }
+        },
+        "/allocate": {
+            "post": {
+                "tags": [
+                    "Allocation"
+                ],
+                "summary": "Allocate Installers to Jobs",
+                "description": "Allocate installers using gov_optimized (best RPI + proximity), equitable (round-robin), or user_choice (forced) mode.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AllocationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Allocation results",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "allocations": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AllocationResult"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/escrow/{job_id}/release": {
+            "post": {
+                "tags": [
+                    "Escrow"
+                ],
+                "summary": "Release Escrow Milestone",
+                "description": "Release payment for a completed milestone (10% design, 70% install, 20% verify).",
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EscrowReleaseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Milestone released"
+                    },
+                    "400": {
+                        "description": "Milestone already released"
+                    },
+                    "404": {
+                        "description": "Job or escrow not found"
+                    }
+                }
+            }
+        },
+        "/verify": {
+            "post": {
+                "tags": [
+                    "Verification"
+                ],
+                "summary": "Submit Verification",
+                "description": "Submit geo-tagged photos for verification. Runs fraud detection pipeline.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string"
+                                    },
+                                    "lat": {
+                                        "type": "number"
+                                    },
+                                    "lng": {
+                                        "type": "number"
+                                    },
+                                    "photos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "job_id",
+                                    "lat",
+                                    "lng",
+                                    "photos"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Verification result with fraud score",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verify/{verification_code}": {
+            "get": {
+                "tags": [
+                    "Verification"
+                ],
+                "summary": "Verify Assessment (QR)",
+                "description": "Verify an assessment using QR code. Returns assessment details and audit trail.",
+                "parameters": [
+                    {
+                        "name": "verification_code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Verified assessment with audit trail"
+                    },
+                    "404": {
+                        "description": "Assessment not found"
+                    }
+                }
+            }
+        },
+        "/monitoring/{project_id}": {
+            "get": {
+                "tags": [
+                    "Monitoring"
+                ],
+                "summary": "Get Telemetry Data",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "hours",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 24,
+                            "minimum": 1,
+                            "maximum": 168
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Telemetry data with trends and alerts"
+                    }
+                }
+            }
+        },
+        "/installers": {
+            "get": {
+                "tags": [
+                    "Installers"
+                ],
+                "summary": "List Installers",
+                "parameters": [
+                    {
+                        "name": "active_only",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean",
+                            "default": true
+                        }
+                    },
+                    {
+                        "name": "min_rpi",
+                        "in": "query",
+                        "schema": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of installers with RPI scores"
+                    }
+                }
+            }
+        },
+        "/installers/{installer_id}/rpi": {
+            "get": {
+                "tags": [
+                    "Installers"
+                ],
+                "summary": "Get RPI Breakdown",
+                "description": "Get detailed RainForge Performance Index breakdown.",
+                "parameters": [
+                    {
+                        "name": "installer_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RPI score with component breakdown"
+                    }
+                }
+            }
+        },
+        "/public/dashboard": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Public Dashboard",
+                "description": "Get ward-level aggregates for transparency.",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dashboard with summary and ward data"
+                    }
+                }
+            }
+        },
+        "/public/export": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Export Public Data",
+                "parameters": [
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "csv",
+                                "geojson"
+                            ],
+                            "default": "csv"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data export in requested format"
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Health Check",
+                "responses": {
+                    "200": {
+                        "description": "Service healthy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "version": {
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AssessmentRequest": {
+                "type": "object",
+                "required": [
+                    "site_id",
+                    "address",
+                    "lat",
+                    "lng",
+                    "roof_area_sqm"
+                ],
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "number",
+                        "minimum": -90,
+                        "maximum": 90
+                    },
+                    "lng": {
+                        "type": "number",
+                        "minimum": -180,
+                        "maximum": 180
+                    },
+                    "roof_area_sqm": {
+                        "type": "number",
+                        "minimum": 1
+                    },
+                    "roof_material": {
+                        "type": "string",
+                        "enum": [
+                            "concrete",
+                            "metal",
+                            "tiles",
+                            "thatched",
+                            "asbestos"
+                        ]
+                    },
+                    "demand_l_per_day": {
+                        "type": "number"
+                    },
+                    "floors": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 20
+                    },
+                    "people": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Scenario": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "tank_liters": {
+                        "type": "integer"
+                    },
+                    "cost_inr": {
+                        "type": "number"
+                    },
+                    "capture_liters": {
+                        "type": "number"
+                    },
+                    "coverage_days": {
+                        "type": "integer"
+                    },
+                    "roi_years": {
+                        "type": "number"
+                    }
+                }
+            },
+            "AssessmentResponse": {
+                "type": "object",
+                "properties": {
+                    "assessment_id": {
+                        "type": "string"
+                    },
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "annual_rainfall_mm": {
+                        "type": "number"
+                    },
+                    "annual_yield_liters": {
+                        "type": "number"
+                    },
+                    "scenarios": {
+                        "type": "object",
+                        "properties": {
+                            "cost_optimized": {
+                                "$ref": "#/components/schemas/Scenario"
+                            },
+                            "max_capture": {
+                                "$ref": "#/components/schemas/Scenario"
+                            },
+                            "dry_season": {
+                                "$ref": "#/components/schemas/Scenario"
+                            }
+                        }
+                    },
+                    "recommended_scenario": {
+                        "type": "string"
+                    },
+                    "subsidy_pct": {
+                        "type": "number"
+                    },
+                    "subsidy_amount_inr": {
+                        "type": "number"
+                    },
+                    "co2_avoided_kg": {
+                        "type": "number"
+                    },
+                    "pdf_url": {
+                        "type": "string"
+                    },
+                    "verify_url": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "AuctionCreateRequest": {
+                "type": "object",
+                "required": [
+                    "job_id"
+                ],
+                "properties": {
+                    "job_id": {
+                        "type": "string"
+                    },
+                    "deadline_hours": {
+                        "type": "integer",
+                        "default": 72,
+                        "minimum": 1,
+                        "maximum": 168
+                    },
+                    "min_bid_inr": {
+                        "type": "number"
+                    },
+                    "max_bid_inr": {
+                        "type": "number"
+                    }
+                }
+            },
+            "BidRequest": {
+                "type": "object",
+                "required": [
+                    "installer_id",
+                    "price_inr",
+                    "timeline_days"
+                ],
+                "properties": {
+                    "installer_id": {
+                        "type": "integer"
+                    },
+                    "price_inr": {
+                        "type": "number",
+                        "minimum": 1
+                    },
+                    "timeline_days": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 180
+                    },
+                    "warranty_months": {
+                        "type": "integer",
+                        "default": 12,
+                        "minimum": 6,
+                        "maximum": 60
+                    },
+                    "notes": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AllocationRequest": {
+                "type": "object",
+                "required": [
+                    "job_ids",
+                    "mode"
+                ],
+                "properties": {
+                    "job_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "mode": {
+                        "type": "string",
+                        "enum": [
+                            "gov_optimized",
+                            "equitable",
+                            "user_choice"
+                        ]
+                    },
+                    "force_installer_id": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "AllocationResult": {
+                "type": "object",
+                "properties": {
+                    "job_id": {
+                        "type": "string"
+                    },
+                    "installer_id": {
+                        "type": "integer"
+                    },
+                    "installer_name": {
+                        "type": "string"
+                    },
+                    "installer_rpi": {
+                        "type": "number"
+                    },
+                    "allocation_score": {
+                        "type": "number"
+                    },
+                    "mode": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "error": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EscrowReleaseRequest": {
+                "type": "object",
+                "required": [
+                    "milestone_id"
+                ],
+                "properties": {
+                    "milestone_id": {
+                        "type": "string"
+                    },
+                    "verification_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "VerificationResponse": {
+                "type": "object",
+                "properties": {
+                    "verification_id": {
+                        "type": "string"
+                    },
+                    "job_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "fraud_score": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "fraud_flags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "geo_distance_m": {
+                        "type": "number"
+                    },
+                    "recommendation": {
+                        "type": "string",
+                        "enum": [
+                            "auto_approve",
+                            "review",
+                            "manual_review",
+                            "reject"
+                        ]
+                    },
+                    "audit_trail": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

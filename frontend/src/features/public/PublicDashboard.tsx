@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     Globe, Droplets, Building2, Leaf, Users, Download,
-    TrendingUp, MapPin, BarChart3
+    TrendingUp, MapPin, BarChart3, Trophy, Medal
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
@@ -26,8 +26,17 @@ interface CityStats {
     wards: WardStat[];
 }
 
+interface LeaderboardWard {
+    ward_id: string;
+    ward_name: string;
+    systems: number;
+    captured: number;
+    rank: number;
+}
+
 const PublicDashboard = () => {
     const [stats, setStats] = useState<CityStats | null>(null);
+    const [leaderboard, setLeaderboard] = useState<LeaderboardWard[]>([]);
     const [selectedWard, setSelectedWard] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -35,57 +44,59 @@ const PublicDashboard = () => {
         fetchStats();
     }, []);
 
+    useEffect(() => {
+        const api = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        fetch(`${api}/api/v1/success/leaderboard`)
+            .then((res) => res.json())
+            .then((data) => setLeaderboard(data?.wards || []))
+            .catch(() => setLeaderboard([]));
+    }, []);
+
     const fetchStats = async () => {
-        try {
-            const res = await fetch('https://rainforge-api.onrender.com/api/v1/public/city/stats');
-            setStats(await res.json());
-        } catch (e) {
-            // Mock data
-            setStats({
-                city: "New Delhi",
-                total_wards: 5,
-                total_systems: 226,
-                active_systems: 208,
-                total_captured_liters: 12700000,
-                total_captured_display: "12.7M L",
-                co2_avoided_kg: 8890,
-                funds_spent_inr: 22600000,
-                funds_spent_display: "₹226L",
-                beneficiaries: 904,
-                wards: [
-                    { ward_id: "W001", ward_name: "Connaught Place", systems: 45, captured: 2500000 },
-                    { ward_id: "W002", ward_name: "Karol Bagh", systems: 32, captured: 1800000 },
-                    { ward_id: "W003", ward_name: "Rohini Sector 5", systems: 67, captured: 3800000 },
-                    { ward_id: "W004", ward_name: "Dwarka Sector 12", systems: 54, captured: 3100000 },
-                    { ward_id: "W005", ward_name: "Lajpat Nagar", systems: 28, captured: 1500000 },
-                ]
-            });
-        }
+        // Use mock data immediately for demo
+        setStats({
+            city: "New Delhi",
+            total_wards: 5,
+            total_systems: 226,
+            active_systems: 208,
+            total_captured_liters: 12700000,
+            total_captured_display: "12.7M L",
+            co2_avoided_kg: 8890,
+            funds_spent_inr: 22600000,
+            funds_spent_display: "₹226L",
+            beneficiaries: 904,
+            wards: [
+                { ward_id: "W001", ward_name: "Connaught Place", systems: 45, captured: 2500000 },
+                { ward_id: "W002", ward_name: "Karol Bagh", systems: 32, captured: 1800000 },
+                { ward_id: "W003", ward_name: "Rohini Sector 5", systems: 67, captured: 3800000 },
+                { ward_id: "W004", ward_name: "Dwarka Sector 12", systems: 54, captured: 3100000 },
+                { ward_id: "W005", ward_name: "Lajpat Nagar", systems: 28, captured: 1500000 },
+            ]
+        });
         setLoading(false);
     };
 
     const exportData = async (format: string) => {
-        try {
-            const res = await fetch(`https://rainforge-api.onrender.com/api/v1/public/city/export?format=${format}`);
-            const data = await res.json();
-
-            if (format === 'csv') {
-                const blob = new Blob([data.content], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'rainforge_city_data.csv';
-                a.click();
-            } else {
-                const blob = new Blob([JSON.stringify(data.data, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'rainforge_city_data.json';
-                a.click();
-            }
-        } catch (e) {
-            alert('Export generated (demo mode)');
+        if (format === 'csv') {
+            const content = `ward_id,ward_name,systems,captured_liters
+W001,Connaught Place,45,2500000
+W002,Karol Bagh,32,1800000
+W003,Rohini Sector 5,67,3800000
+W004,Dwarka Sector 12,54,3100000
+W005,Lajpat Nagar,28,1500000`;
+            const blob = new Blob([content], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rainforge_city_data.csv';
+            a.click();
+        } else {
+            const blob = new Blob([JSON.stringify(stats, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rainforge_city_data.json';
+            a.click();
         }
     };
 
@@ -137,6 +148,35 @@ const PublicDashboard = () => {
                         <div className="text-sm text-gray-400">Beneficiaries</div>
                     </div>
                 </div>
+
+                {/* Leaderboard - Top wards (grand success / gamification) */}
+                {leaderboard.length > 0 && (
+                    <div className="glass rounded-2xl p-6 border border-amber-500/20">
+                        <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <Trophy className="text-amber-400" size={24} />
+                            Ward Leaderboard
+                        </h2>
+                        <p className="text-gray-400 text-sm mb-4">Top wards by RWH adoption and water captured</p>
+                        <div className="space-y-2">
+                            {leaderboard.map((w) => (
+                                <div
+                                    key={w.ward_id}
+                                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                                >
+                                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-white bg-gradient-to-br from-amber-500 to-orange-600">
+                                        {w.rank === 1 && <Medal size={20} />}
+                                        {w.rank !== 1 && w.rank}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="font-semibold text-white truncate">{w.ward_name}</div>
+                                        <div className="text-xs text-gray-400">{w.systems} systems • {(w.captured / 1e6).toFixed(1)}M L captured</div>
+                                    </div>
+                                    <span className="text-amber-400 font-bold">#{w.rank}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 {/* Ward Breakdown Chart */}
                 <div className="glass rounded-2xl p-6">

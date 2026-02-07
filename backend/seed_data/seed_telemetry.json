@@ -1,0 +1,218 @@
+{
+    "devices": [
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "location": "Delhi - Connaught Place",
+            "tank_capacity": 5000,
+            "installed_date": "2025-06-15"
+        },
+        {
+            "device_id": "DEV-002",
+            "project_id": 2,
+            "location": "Gurugram - Sector 5",
+            "tank_capacity": 3000,
+            "installed_date": "2025-08-20"
+        },
+        {
+            "device_id": "DEV-003",
+            "project_id": 3,
+            "location": "Bangalore - Koramangala",
+            "tank_capacity": 8000,
+            "installed_date": "2025-07-10"
+        }
+    ],
+    "readings": [
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T00:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3500,
+            "unit": "liters",
+            "battery_pct": 95.2,
+            "signal_rssi": -42
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T01:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3480,
+            "unit": "liters",
+            "battery_pct": 95.1,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T02:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3460,
+            "unit": "liters",
+            "battery_pct": 95.0,
+            "signal_rssi": -43
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T06:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3350,
+            "unit": "liters",
+            "battery_pct": 94.8,
+            "signal_rssi": -45
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T07:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3200,
+            "unit": "liters",
+            "battery_pct": 94.7,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T07:00:00Z",
+            "sensor_type": "flow_meter",
+            "value": 150,
+            "unit": "liters",
+            "battery_pct": 94.7,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T08:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3050,
+            "unit": "liters",
+            "battery_pct": 94.6,
+            "signal_rssi": -46
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T08:00:00Z",
+            "sensor_type": "flow_meter",
+            "value": 150,
+            "unit": "liters",
+            "battery_pct": 94.6,
+            "signal_rssi": -46
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T12:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 2950,
+            "unit": "liters",
+            "battery_pct": 94.4,
+            "signal_rssi": -43
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T14:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 2900,
+            "unit": "liters",
+            "battery_pct": 94.3,
+            "signal_rssi": -45
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T15:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3200,
+            "unit": "liters",
+            "battery_pct": 94.2,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T16:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3600,
+            "unit": "liters",
+            "battery_pct": 94.1,
+            "signal_rssi": -43
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T16:00:00Z",
+            "sensor_type": "water_quality",
+            "value": 7.2,
+            "unit": "pH",
+            "tds": 145,
+            "battery_pct": 94.1,
+            "signal_rssi": -43
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T18:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3500,
+            "unit": "liters",
+            "battery_pct": 93.9,
+            "signal_rssi": -45
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T19:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3400,
+            "unit": "liters",
+            "battery_pct": 93.8,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T19:00:00Z",
+            "sensor_type": "flow_meter",
+            "value": 100,
+            "unit": "liters",
+            "battery_pct": 93.8,
+            "signal_rssi": -44
+        },
+        {
+            "device_id": "DEV-001",
+            "project_id": 1,
+            "timestamp": "2026-02-03T22:00:00Z",
+            "sensor_type": "tank_level",
+            "value": 3300,
+            "unit": "liters",
+            "battery_pct": 93.5,
+            "signal_rssi": -43
+        }
+    ],
+    "alerts": [
+        {
+            "device_id": "DEV-002",
+            "project_id": 2,
+            "timestamp": "2026-02-03T10:30:00Z",
+            "alert_type": "low_level",
+            "message": "Tank level below 20%",
+            "severity": "warning",
+            "acknowledged": true
+        },
+        {
+            "device_id": "DEV-003",
+            "project_id": 3,
+            "timestamp": "2026-02-03T16:45:00Z",
+            "alert_type": "overflow_warning",
+            "message": "Tank level at 92%",
+            "severity": "warning",
+            "acknowledged": false
+        }
+    ]
+}

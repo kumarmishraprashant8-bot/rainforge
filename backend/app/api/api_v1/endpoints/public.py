@@ -67,14 +67,60 @@ _warranties = {}
 _outcome_contracts = {}
 
 
-# ============== WARD STATS DATA ==============
+# ============== WOW MOMENT #3: PUBLIC TRANSPARENCY ==============
 
+# Enhanced ward stats with fraud prevention metrics
 _ward_stats = {
-    "W001": {"name": "Connaught Place", "systems": 45, "captured": 2500000, "spent": 4500000},
-    "W002": {"name": "Karol Bagh", "systems": 32, "captured": 1800000, "spent": 3200000},
-    "W003": {"name": "Rohini Sector 5", "systems": 67, "captured": 3800000, "spent": 6700000},
-    "W004": {"name": "Dwarka Sector 12", "systems": 54, "captured": 3100000, "spent": 5400000},
-    "W005": {"name": "Lajpat Nagar", "systems": 28, "captured": 1500000, "spent": 2800000},
+    "NDMC-14": {
+        "name": "Connaught Place", 
+        "systems": 312, 
+        "captured": 18400000, 
+        "spent": 15600000,
+        "fraud_prevented": 9,
+        "subsidy_utilized": 7800000,
+        "lat": 28.6304,
+        "lng": 77.2177
+    },
+    "SDMC-07": {
+        "name": "Saket", 
+        "systems": 245, 
+        "captured": 12800000, 
+        "spent": 11200000,
+        "fraud_prevented": 5,
+        "subsidy_utilized": 5600000,
+        "lat": 28.5245,
+        "lng": 77.2066
+    },
+    "EDMC-03": {
+        "name": "Shahdara", 
+        "systems": 189, 
+        "captured": 9500000, 
+        "spent": 8100000,
+        "fraud_prevented": 7,
+        "subsidy_utilized": 4050000,
+        "lat": 28.6731,
+        "lng": 77.2896
+    },
+    "NDMC-28": {
+        "name": "Rohini Sector 5", 
+        "systems": 276, 
+        "captured": 15200000, 
+        "spent": 13400000,
+        "fraud_prevented": 4,
+        "subsidy_utilized": 6700000,
+        "lat": 28.7041,
+        "lng": 77.1025
+    },
+    "SDMC-15": {
+        "name": "Dwarka Sector 12", 
+        "systems": 198, 
+        "captured": 11200000, 
+        "spent": 9800000,
+        "fraud_prevented": 6,
+        "subsidy_utilized": 4900000,
+        "lat": 28.5921,
+        "lng": 77.0463
+    },
 }
 
 
@@ -93,11 +139,16 @@ class OutcomeContractCreate(BaseModel):
     monitoring_months: int = 12
 
 
-# ============== PUBLIC DASHBOARD ENDPOINTS ==============
+# ============== WOW MOMENT #3: PUBLIC DASHBOARD ENDPOINTS ==============
 
 @router.get("/ward/{ward_id}/stats")
 def get_ward_stats(ward_id: str):
-    """Get public statistics for a ward."""
+    """
+    🔥 WOW MOMENT #3: Public Transparency - Ward-Level Stats
+    
+    Returns comprehensive ward statistics for public transparency.
+    No authentication required - citizen access.
+    """
     if ward_id not in _ward_stats:
         raise HTTPException(status_code=404, detail=f"Ward {ward_id} not found")
     
@@ -105,16 +156,19 @@ def get_ward_stats(ward_id: str):
     co2_avoided = w["captured"] * 0.0007  # ~0.7g CO2 per liter
     
     return {
-        "ward_id": ward_id,
+        "ward": ward_id,
         "ward_name": w["name"],
-        "total_systems": w["systems"],
-        "active_systems": int(w["systems"] * 0.92),  # 92% active
-        "total_captured_liters": w["captured"],
-        "total_captured_display": f"{w['captured']/1000000:.1f}M L",
-        "co2_avoided_kg": round(co2_avoided, 1),
-        "funds_spent_inr": w["spent"],
-        "funds_spent_display": f"₹{w['spent']/100000:.1f}L",
+        "systems_installed": w["systems"],
+        "active_systems": int(w["systems"] * 0.95),  # 95% active
+        "water_captured_liters": w["captured"],
+        "water_captured_display": f"{w['captured']/1000000:.1f}M liters",
+        "fraud_prevented_cases": w["fraud_prevented"],
+        "subsidy_utilized_inr": w["subsidy_utilized"],
+        "subsidy_display": f"₹{w['subsidy_utilized']/100000:.1f} Lakhs",
+        "co2_avoided_kg": round(co2_avoided, 0),
         "beneficiaries": w["systems"] * 4,  # Avg 4 per household
+        "coordinates": {"lat": w["lat"], "lng": w["lng"]},
+        "transparency_label": "Public Transparency Dashboard (RTI-Ready)",
         "last_updated": datetime.utcnow().isoformat()
     }
 
@@ -125,55 +179,133 @@ def get_city_stats():
     total_systems = sum(w["systems"] for w in _ward_stats.values())
     total_captured = sum(w["captured"] for w in _ward_stats.values())
     total_spent = sum(w["spent"] for w in _ward_stats.values())
+    total_fraud = sum(w["fraud_prevented"] for w in _ward_stats.values())
+    total_subsidy = sum(w["subsidy_utilized"] for w in _ward_stats.values())
     co2_avoided = total_captured * 0.0007
     
     return {
         "city": "New Delhi",
         "total_wards": len(_ward_stats),
-        "total_systems": total_systems,
-        "active_systems": int(total_systems * 0.92),
-        "total_captured_liters": total_captured,
-        "total_captured_display": f"{total_captured/1000000:.1f}M L",
-        "co2_avoided_kg": round(co2_avoided, 1),
+        "systems_installed": total_systems,
+        "active_systems": int(total_systems * 0.95),
+        "water_captured_liters": total_captured,
+        "water_captured_display": f"{total_captured/1000000:.1f}M liters",
+        "fraud_prevented_cases": total_fraud,
+        "subsidy_utilized_inr": total_subsidy,
+        "co2_avoided_kg": round(co2_avoided, 0),
         "funds_spent_inr": total_spent,
-        "funds_spent_display": f"₹{total_spent/100000:.1f}L",
         "beneficiaries": total_systems * 4,
         "wards": [
             {
                 "ward_id": k,
                 "ward_name": v["name"],
                 "systems": v["systems"],
-                "captured": v["captured"]
+                "captured": v["captured"],
+                "fraud_prevented": v["fraud_prevented"]
             }
             for k, v in _ward_stats.items()
-        ]
+        ],
+        "transparency_label": "Public Transparency Dashboard (RTI-Ready)"
     }
 
 
+# ============== WOW MOMENT #4: RTI EXPORT ==============
+
 @router.get("/city/export")
-def export_city_data(format: str = "json"):
-    """Export city data as JSON or simplified CSV format."""
-    data = []
+def export_city_data():
+    """
+    🔥 WOW MOMENT #4: One-Click RTI Export
+    
+    Returns RTI-ready data package with:
+    - sites.csv: All site data in CSV format
+    - sites.geojson: GeoJSON for mapping
+    - audit_trail.csv: Verification audit trail
+    - metadata: Export information
+    
+    Response is JSON with embedded file contents.
+    Frontend should download as ZIP.
+    """
+    # Build sites CSV
+    sites_headers = ["ward_id", "ward_name", "systems_installed", "water_captured_liters", "subsidy_utilized_inr", "fraud_prevented", "co2_avoided_kg", "lat", "lng"]
+    sites_rows = [",".join(sites_headers)]
+    
     for ward_id, w in _ward_stats.items():
-        data.append({
-            "ward_id": ward_id,
-            "ward_name": w["name"],
-            "systems": w["systems"],
-            "captured_liters": w["captured"],
-            "spent_inr": w["spent"],
-            "co2_avoided_kg": round(w["captured"] * 0.0007, 1),
-            "lat": 28.6139 + random.uniform(-0.1, 0.1),  # Mock geo
-            "lng": 77.2090 + random.uniform(-0.1, 0.1)
-        })
+        co2 = round(w["captured"] * 0.0007, 0)
+        row = [
+            ward_id,
+            w["name"],
+            str(w["systems"]),
+            str(w["captured"]),
+            str(w["subsidy_utilized"]),
+            str(w["fraud_prevented"]),
+            str(co2),
+            str(w["lat"]),
+            str(w["lng"])
+        ]
+        sites_rows.append(",".join(row))
     
-    if format == "csv":
-        headers = list(data[0].keys())
-        csv_lines = [",".join(headers)]
-        for row in data:
-            csv_lines.append(",".join(str(row[h]) for h in headers))
-        return {"format": "csv", "content": "\n".join(csv_lines)}
+    sites_csv = "\n".join(sites_rows)
     
-    return {"format": "json", "data": data}
+    # Build GeoJSON
+    features = []
+    for ward_id, w in _ward_stats.items():
+        feature = {
+            "type": "Feature",
+            "properties": {
+                "ward_id": ward_id,
+                "name": w["name"],
+                "systems": w["systems"],
+                "captured_liters": w["captured"],
+                "fraud_prevented": w["fraud_prevented"]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [w["lng"], w["lat"]]
+            }
+        }
+        features.append(feature)
+    
+    geojson = {
+        "type": "FeatureCollection",
+        "features": features
+    }
+    
+    # Build audit trail CSV
+    audit_headers = ["timestamp", "action", "ward_id", "details", "user"]
+    audit_rows = [",".join(audit_headers)]
+    
+    # Mock audit entries
+    import json as json_lib
+    audit_entries = [
+        {"ts": "2026-02-04T10:00:00Z", "action": "VERIFICATION_APPROVED", "ward": "NDMC-14", "details": "System ID SYS-001 verified", "user": "admin_01"},
+        {"ts": "2026-02-04T09:30:00Z", "action": "FRAUD_DETECTED", "ward": "SDMC-07", "details": "Photo reuse detected - payment frozen", "user": "system"},
+        {"ts": "2026-02-04T09:00:00Z", "action": "SUBSIDY_RELEASED", "ward": "NDMC-14", "details": "₹25,000 released for SYS-002", "user": "finance_01"},
+        {"ts": "2026-02-03T16:00:00Z", "action": "INSTALLATION_COMPLETE", "ward": "EDMC-03", "details": "Installation verified for SYS-003", "user": "installer_07"},
+        {"ts": "2026-02-03T14:00:00Z", "action": "FRAUD_PREVENTED", "ward": "NDMC-28", "details": "GPS mismatch - verification rejected", "user": "system"},
+    ]
+    
+    for a in audit_entries:
+        row = [a["ts"], a["action"], a["ward"], a["details"], a["user"]]
+        audit_rows.append(",".join(row))
+    
+    audit_csv = "\n".join(audit_rows)
+    
+    return {
+        "export_type": "RTI_PACKAGE",
+        "generated_at": datetime.utcnow().isoformat(),
+        "files": {
+            "sites.csv": sites_csv,
+            "sites.geojson": geojson,
+            "audit_trail.csv": audit_csv
+        },
+        "metadata": {
+            "city": "New Delhi",
+            "total_wards": len(_ward_stats),
+            "total_systems": sum(w["systems"] for w in _ward_stats.values()),
+            "format": "RTI-Ready Export Package",
+            "download_note": "📦 Download RTI-Ready Data (ZIP)"
+        }
+    }
 
 
 # ============== AMC ENDPOINTS ==============
